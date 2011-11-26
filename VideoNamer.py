@@ -3,7 +3,7 @@
 
 ################################################################################
 #                                                                              #
-#   MovieNamer.py - A tag-aware tool for renaming movies found on BitTorrent.  #
+#   VideoNamer.py - A tag-aware tool for renaming movies found on BitTorrent.  #
 #                                                                              #
 ################################################################################
 
@@ -25,7 +25,7 @@
 #
 # Configuration
 #
-movieDir = '/mnt/Media/Video/Filme'
+videoDir = '/mnt/Media/Video/Filme'
 
 import os
 import string
@@ -33,38 +33,38 @@ import ImdbApiClient
 
 
 #
-# MovieNamer
+# VideoNamer
 #
-class MovieNamer:
+class VideoNamer:
 
     # static configuration
 
-    movieDir = ''
+    videoDir = ''
 
     # central data structure
 
-    movies = []
+    videos = []
 
-    def __init__ (self, movieDir):
-        self.movieDir = movieDir
+    def __init__ (self, videoDir):
+        self.videoDir = videoDir
 
     def run (self):
         self.parseDirs()
-        self.makeMovies()
+        self.makeVideos()
 
     # Parses the movie directory into self.movies
     def parseDirs (self):
         try:
-            self.movies = os.parseDirs(self.movieDir).sort()
+            self.movies = os.parseDirs(self.videoDir).sort()
         except:
             with open("FilmlisteKlaas.txt") as f:
                 self.movies = f.readlines()
 
     # Instantiates movie objects with the title.
-    def makeMovies (self):
+    def makeVideos (self):
         movies = []
         for titleString in self.movies:
-            movies.append(Movie(titleString))
+            movies.append(Video(titleString))
         self.movies = movies
 
     # Provoke printing.
@@ -75,9 +75,9 @@ class MovieNamer:
 
 
 #
-# Self-aware Movie Object
+# Self-aware Video Object
 #
-class Movie:
+class Video:
 
     # Input
 
@@ -292,7 +292,7 @@ class Movie:
             'MD', 'MicDub',
             'LD', 'LineDub', 'Dubbed', 'dubbed', 'linedubbed', 'line dubbed',
 
-            # Movie Version
+            # Video Version
             '#Uncut', 'UNCUT', 'uncut',
             '#Proper', 'PROPER', 'proper',
             '#DirectorsCut', 'Directors Cut', 'Director\'s Cut',
@@ -388,7 +388,7 @@ class Movie:
         name = self.name[len(self.prefix):]
 
         # Stripping eventual whitespaces
-        mt = MovieTool()
+        mt = VideoTool()
         name = mt.stripWhitespaceCharacter(name, self.whitespaceCharacter)
 
         print 'Name:', name, '\n',\
@@ -398,7 +398,7 @@ class Movie:
 #
 # Static Methods
 #
-class MovieTool:
+class VideoTool:
 
     def __init__ (self):
         pass
@@ -447,6 +447,6 @@ class MovieTool:
         return newName
 
 if __name__ == '__main__':
-    mn = MovieNamer(movieDir)
+    mn = VideoNamer(videoDir)
     mn.run()
     mn.echo()
