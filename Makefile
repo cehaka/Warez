@@ -8,6 +8,8 @@ doxygen:
 	mv html/* .
 	git symbolic-ref HEAD refs/heads/gh-pages
 	git add .
-	git commit -m 'new commit to gh-pages'
+
+    #this might fail
+	git commit -m 'new commit to gh-pages' &> /dev/null
 	git push origin gh-pages
 	git checkout master
