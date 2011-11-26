@@ -34,11 +34,11 @@ videos = ''
 class VideoNamer:
     """High Level Class"""
 
-    # static configuration
+    # Static Attribute
 
     videos = ''
 
-    # central data structure
+    # Central data structure
 
     videos = []
 
@@ -114,6 +114,70 @@ class Video:
     videoQuality = ''
     videoSource = ''
     releaseGroup = ''
+
+    # Tag Aliases
+
+    tags = {
+
+        'Audio Encoding':[\
+            ['#ac3', 'ac3', 'AC3', 'DTS']
+        ],
+
+        'Audio Language':[\
+            ['#de', 'German', 'german', 'Deutsch', 'deutsch'],
+            ['#en', 'English', 'english', 'Englisch', 'english']
+        ],
+
+        'Audio Source':[\
+            ['#md', 'MD', 'MicDub'],
+            ['#ld', 'LD', 'LineDub', 'Dubbed', 'dubbed', 'linedubbed', 'line dubbed']
+        ],
+
+        'Video Version':[\
+            ['#uncut', 'UNCUT', 'uncut'],
+            ['#proper', 'PROPER', 'proper'],
+            ['#directorsCut', 'Directors Cut', 'Director\'s Cut']
+        ],
+
+        'Release Group':[\
+            ['#CRiTiCAL', '-CRiTiCAL', 'CRiTiCAL', '-critical'],
+            ['#CRUCiAL', '-CRUCiAL', 'CRUCiAL', '-crucial'],
+            ['#DiViDi', '-DiViDi', 'DiViDi', '-dividi'],
+            ['#iNTERNAL', '-iNTERNAL', 'iNTERNAL', '-internal'],
+            ['#PLEADERS', '-PL', '-PLEADERS', '-Pleaders', '-pleaders'],
+            ['#HDLiTE', '-HDLiTE', '-HDLite', 'HDLiTE', '-HDlite', '-hdlite'],
+            ['#HoRnEtS', '-HoRnEtS', '-Hornets', '-hornets'],
+            ['#NOTRADE', '-NOTRADE', '-NoTrade', '-noTrade', '-notrade'],
+            ['#XMF', '-XMF', '-Xmf', '-xmf']
+        ],
+
+        'Source Media':[\
+            ['#BDrip', 'BDRip', 'BDrip', 'bdrip', 'BD',
+                'BlueRay', 'blueray', 'BlueRayRip', 'bluerayrip',
+                'BRRIP', 'BRRip', 'BRrip', 'brrip'],
+            ['#DVDrip', 'DVDRip', 'DVDrip', 'DVDRiP', 'DVD rip', 'dvd rip',
+                'dvdrip', 'DVD', 'DVDR'],
+            ['#HDTVrip', 'HDTVrip', 'hdtvRip', 'HDTVRIP', 'HDTVRip', 'HDTV', 'hdtv']
+        ],
+
+        'Video Encoding':[\
+            ['#MVCD', 'MVCD', 'mvcd'],
+            ['#h264', 'H264', 'h264', 'x264', 'X264'],
+            ['#XViD', 'XVID', 'XViD', 'XviD', 'Xvid', 'xvid']
+        ],
+
+        'Video Resolution':[\
+            ['#NTSC', 'NTSC', 'ntsc'],
+            ['#PAL', 'PAL'],
+            ['#720p', '720p'],
+            ['#1080i', '1080i']
+        ],
+
+        'Video Source':[\
+            ['#SC', 'SC', 'Screener'],
+            ['#TS', 'TS', 'Telesync', 'TeleSync']
+        ]
+    }
 
     def __init__ (self, name = ''):
         """
@@ -300,59 +364,33 @@ class Video:
     def parseTags (self):
         """Parsing the Tags of self.name into self.tags"""
 
-        tags = [
-            # Audio Encoding
-            'ac3', 'AC3', 'DTS',
+        for category in self.tags:
+            for synonyms in self.tags[category]:
+                for synonym in synonyms:
+                    #print category, '-', synonyms, '-', synonym
 
-            # Audio Language
-            '#de', 'German', 'german', 'Deutsch', 'deutsch',
-            '#en', 'English', 'english', 'Englisch', 'english'
+                    self.parseTag(category, synonym)
 
-            # Audio Source
-            'MD', 'MicDub',
-            'LD', 'LineDub', 'Dubbed', 'dubbed', 'linedubbed', 'line dubbed',
+    def parseTag (self, category, synonym):
 
-            # Video Version
-            '#Uncut', 'UNCUT', 'uncut',
-            '#Proper', 'PROPER', 'proper',
-            '#DirectorsCut', 'Directors Cut', 'Director\'s Cut',
+        # Checking That The Tag Is in self.name
+        if synonym not in self.name: return
 
-            # Release Group
-            '#CRiTiCAL', '-CRiTiCAL', 'CRiTiCAL', '-critical',
-            '#CRUCiAL', '-CRUCiAL', 'CRUCiAL', '-crucial',
-            '#DiViDi', '-DiViDi', 'DiViDi', '-dividi',
-            '#iNTERNAL', '-iNTERNAL', 'iNTERNAL', '-internal'
-            '#PLEADERS', '-PL', '-PLEADERS', '-Pleaders', '-pleaders',
-            '#HDLiTE', '-HDLiTE', '-HDLite', 'HDLiTE', '-HDlite', '-hdlite',
-            '#HoRnEtS', '-HoRnEtS', '-Hornets', '-hornets',
-            '#NOTRADE', '-NOTRADE', '-NoTrade', '-noTrade', '-notrade'
-            '#XMF', '-XMF', '-Xmf', '-xmf',
+        # Determining The Hash Tag
+        for synonyms in self.tags[category]:
+            if synonym in synonyms:
+                hashTag = synonyms[0]
 
-            # Source Media
-            '#BDrip', 'BDRip', 'BDrip', 'bdrip', 'BD',
-                      'BlueRay', 'blueray', 'BlueRayRip', 'bluerayrip',
-                      'BRRIP', 'BRRip', 'BRrip', 'brrip',
-            'DVD', 'DVDR', 'DVDRip', 'DVDrip', 'DVDRiP', 'DVD rip', 'dvd rip', 'dvdrip',
-            'HDTVrip', 'hdtvRip', 'HDTVRIP', 'HDTVRip',
-
-            # Video Encoding
-            '#MVCD', 'MVCD', 'mvcd'
-            '#h264', 'H264', 'h264', 'x264', 'X264',
-            '#XViD', 'XVID', 'XViD', 'XviD', 'Xvid', 'xvid',
-
-            # Video Resolution
-            'PAL',
-            '#720p', '720p',
-            '#1080i', '1080i',
-
-            # Video Source
-            '#SC', 'SC', 'Screener',
-            '#TS', 'TS', 'Telesync', 'TeleSync'
-        ]
-
-        for tag in tags:
-            if tag in self.name:
-                print tag
+        # Saving
+        if category == 'Audio Encoding': self.audioEncoding = hashTag
+        if category == 'Audio Language': self.audioLanguage = hashTag
+        if category == 'Audio Source': self.audioSource= hashTag
+        if category == 'Release Group': self.releaseGroup = hashTag
+        if category == 'Source Media': self.sourceMedia = hashTag
+        if category == 'Video Encoding': self.videoEncoding = hashTag
+        if category == 'Video Resolution': self.videoResolution = hashTag
+        if category == 'Video Source': self.videoSource = hashTag
+        if category == 'Video Version': self.videoVersion= hashTag
 
     def parseSuffix (self):
         """Parsing an Eventual Suffix in this.name into this.suffix"""
