@@ -1,6 +1,6 @@
 doxygen:
 	doxygen
-    python DoxyCleaner.py
+	python DoxyCleaner.py
 	rm .git/index
 	rm Doxyfile
 	rm -rf filmlists/
