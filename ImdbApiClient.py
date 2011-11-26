@@ -35,30 +35,35 @@ class ImdbApiClient:
 
     """
     Client Tool for http://www.imdbapi.com
-
-    @param  imdbApiUrl  URL of A Service Compatible With http://www.imdbapi.com
     """
 
     imdbApiUrl = ''
 
     def __init__(self, imdbApiUrl='http://www.imdbapi.com/?'):
+        """
+        Attribute Writing Constructor
+
+
+        @param  imdbApiUrl  Service-URL Compatible With http://www.imdbapi.com
+        """
+
         self.imdbApiUrl = imdbApiUrl
 
     def lookup (self, i=None, t=None, y=None, r=None, plot='short',
                 callback=None, tomatoes = None):
-    """
-    Parameter  |  Value              |  Description
-    -------------------------------------------------------------------------
-    i          |  string (optional)  |  a valid IMDb movie id
-    t          |  string (optional)  |  title of a movie to search for
-    y          |  year (optional)    |  year of the movie
-    r          |  JSON, XML          |  response data type (JSON default)
-    plot       |  short, full        |  short or extended plot (short default)
-    callback   |  name (optional)    |  JSONP callback name
-    tomatoes   |  true (optional)    |  adds rotten tomatoes data
+        """
+        Parameter  |  Value              |  Description
+        -------------------------------------------------------------------------
+        i          |  string (optional)  |  a valid IMDb movie id
+        t          |  string (optional)  |  title of a movie to search for
+        y          |  year (optional)    |  year of the movie
+        r          |  JSON, XML          |  response data type (JSON default)
+        plot       |  short, full        |  short or extended plot (short default)
+        callback   |  name (optional)    |  JSONP callback name
+        tomatoes   |  true (optional)    |  adds rotten tomatoes data
 
-    While both i and t are optional at least one argument is required.
-    """
+        While both i and t are optional at least one argument is required.
+        """
 
         # Building the URL
         if i != None: url = imdbApiUrl + urllib.urlencode({'i': i})

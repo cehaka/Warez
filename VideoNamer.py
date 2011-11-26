@@ -29,23 +29,31 @@ A tag-aware tool for renaming videos.
 #
 # Configuration
 #
-videoDir = ''
+videos = ''
 
 class VideoNamer:
     """High Level Class"""
 
     # static configuration
 
-    videoDir = ''
+    videos = ''
 
     # central data structure
 
     videos = []
 
-    def __init__ (self, videoDir):
-        self.videoDir = videoDir
+    def __init__ (self, videos):
+        """
+        Constructor
+
+        @param  videos  Either a folder containing videos or a list of videos.
+        """
+
+        self.videos = videos
 
     def run (self):
+        """Parsing and Renaming if needed"""
+
         self.parseDirs()
         self.makeVideos()
 
@@ -53,7 +61,7 @@ class VideoNamer:
         """Parsing the Movie Directory into self.movies"""
 
         try:
-            self.movies = os.parseDirs(self.videoDir).sort()
+            self.movies = os.parseDirs(self.videos).sort()
         except:
             with open("videolists/0.filmlist") as f:
                 self.movies = f.readlines()
@@ -108,6 +116,11 @@ class Video:
     releaseGroup = ''
 
     def __init__ (self, name = ''):
+        """
+        Attribute Writing Constructor
+
+        @param  name    Name of the directory represented by this video.
+        """
 
         # Cleaning out eventual line-endings
         if name.endswith('\n'): name = name[:-1]
@@ -122,6 +135,7 @@ class Video:
         #self.writeBack()
 
     def parse (self):
+        """Parsing self.name into Attributes"""
 
         self.parsePrefix()
         self.parseWhitespace()
@@ -409,10 +423,12 @@ class VideoTool:
     """Static Methods used by Video"""
 
     def __init__ (self):
+        """Empty Constructor"""
+
         pass
 
     def stripWhitespaceCharacter (self, name, whitespaceCharacter):
-    """Stripping a Given White Space Character Encoding of the given name"""
+        """Stripping a Given White Space Character Encoding of the given name"""
 
         newName = ''
 
@@ -457,6 +473,6 @@ class VideoTool:
 
 
 if __name__ == '__main__':
-    mn = VideoNamer(videoDir)
+    mn = VideoNamer(videos)
     mn.run()
     mn.echo()

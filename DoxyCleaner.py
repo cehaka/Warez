@@ -27,9 +27,12 @@ class DoxyCleaner:
     """Removing The 'Generated On' Notes ofrom Doxygen's HTMLs'"""
 
     def __init__(self):
+        """Empty Constructor"""
+
         pass
 
     def run (self):
+        """Gathering And Cleaning HTMLs """
 
         self.cleanHTMLs(self.gatherHTMLs())
 
