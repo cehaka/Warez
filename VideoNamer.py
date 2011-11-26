@@ -1,12 +1,6 @@
 #! /bin/python
 # -*- coding: utf-8 -*-
 
-################################################################################
-#                                                                              #
-#   VideoNamer.py - A tag-aware tool for renaming movies found on BitTorrent.  #
-#                                                                              #
-################################################################################
-
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
 #       the Free Software Foundation; either version 2 of the License, or
@@ -22,20 +16,23 @@
 #       Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #       MA 02110-1301, USA.
 
-#
-# Configuration
-#
-videoDir = '/mnt/Media/Video/Filme'
-
 import os
 import string
 import ImdbApiClient
 
+"""
+VideoNamer.py
+
+A tag-aware tool for renaming videos.
+"""
 
 #
-# VideoNamer
+# Configuration
 #
+videoDir = ''
+
 class VideoNamer:
+    """High Level Class"""
 
     # static configuration
 
@@ -52,32 +49,33 @@ class VideoNamer:
         self.parseDirs()
         self.makeVideos()
 
-    # Parses the movie directory into self.movies
     def parseDirs (self):
+        """Parsing the Movie Directory into self.movies"""
+
         try:
             self.movies = os.parseDirs(self.videoDir).sort()
         except:
-            with open("FilmlisteKlaas.txt") as f:
+            with open("videolists/0.filmlist") as f:
                 self.movies = f.readlines()
 
-    # Instantiates movie objects with the title.
     def makeVideos (self):
+        """Instantiating a Movie Object for each Title"""
+
         movies = []
         for titleString in self.movies:
             movies.append(Video(titleString))
         self.movies = movies
 
-    # Provoke printing.
     def echo (self):
+        """Provoking Printing"""
+
         #for movie in self.movies:
         movie = self.movies[0]
         movie.echo()
 
 
-#
-# Self-aware Video Object
-#
 class Video:
+    """Self-aware Video Object"""
 
     # Input
 
@@ -132,12 +130,16 @@ class Video:
         self.parseTitle()
 
     def parsePrefix (self):
+        """Parsing an Eventual Prefix into self.prefix"""
+
         knownPrefixes = ['www.torrent.to...', 'www.ubb.to']
         for prefix in knownPrefixes:
             if self.name.startswith(prefix):
                 self.prefix = prefix
 
     def parseWhitespace (self):
+        """Parsing White Space Encoding into self.whitespaceCharacter"""
+
         self.detectWhitespaceEncoding()
 
         if self.whitespaceCharacter != '': return
@@ -149,8 +151,8 @@ class Video:
         print 'Warning: Neither a whitespace character nor caseEncoding was detected:'
         print self.name
 
-    # Detecting replacement of whitespace with other characters
     def  detectWhitespaceEncoding (self):
+        """Detecting Replacement of Whitespace with other Characters"""
 
         # Count potential whitespace characters
 
@@ -194,8 +196,8 @@ class Video:
         hyphens != 0:
             self.whitespaceCharacter = '-'
 
-    # Detect CamelCase and mixedCase
     def detectCompoundEncoding (self):
+        """Detecting Whitespaces Encoded into CamelCase and mixedCase"""
 
         upperLetters = 0
         lowerLetters = 0
@@ -215,6 +217,7 @@ class Video:
             self.whitespaceCharacter = 'mixedCase'
 
     def parseYear (self):
+        """Parsing the Year Eventually Contained in self.name"""
 
         # Finding the year
         year = 0
@@ -274,11 +277,14 @@ class Video:
         self.yearEndPos = yearEndPos
 
     def requestYear (self):
+        """Requesting self.year from IMDB API using ImdbApiClient"""
+
         #print response['Title'] + ' (' + response['Year'] + ')'
         iac = ImdbApiClient()
         iac.lookup(None, self.title)
 
     def parseTags (self):
+        """Parsing the Tags of self.name into self.tags"""
 
         tags = [
             # Audio Encoding
@@ -335,11 +341,14 @@ class Video:
                 print tag
 
     def parseSuffix (self):
+        """Parsing an Eventual Suffix in this.name into this.suffix"""
+
         knownSuffixes = [
             '.shared.for.saugstube.to.mpg'
         ]
 
     def parseTitle (self):
+        """Parsing the Title Contained in this.name into this.title"""
 
         # Overwriting all parsed attributes with whitespace
         name = self.name
@@ -383,6 +392,7 @@ class Video:
 
 
     def echo (self):
+        """Echoing This Single Video Using The Gathered Information"""
 
         # Striping the prefix
         name = self.name[len(self.prefix):]
@@ -395,15 +405,14 @@ class Video:
                'Prefix:', self.prefix, 'Title:', self.title, 'Year:',self.year
 
 
-#
-# Static Methods
-#
 class VideoTool:
+    """Static Methods used by Video"""
 
     def __init__ (self):
         pass
 
     def stripWhitespaceCharacter (self, name, whitespaceCharacter):
+    """Stripping a Given White Space Character Encoding of the given name"""
 
         newName = ''
 
@@ -445,6 +454,7 @@ class VideoTool:
 
         #print 'stripWhitespaceCharacter:', name, whitespaceCharacter, newName
         return newName
+
 
 if __name__ == '__main__':
     mn = VideoNamer(videoDir)

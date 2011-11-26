@@ -1,12 +1,6 @@
 #! /bin/python
 # -*- coding: utf-8 -*-
 
-################################################################################
-#                                                                              #
-#   ImdbApiClient - A client tool for http://www.imdbapi.com.                  #
-#                                                                              #
-################################################################################
-
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
 #       the Free Software Foundation; either version 2 of the License, or
@@ -25,6 +19,12 @@
 import urllib
 import ast
 
+"""
+ImdbApiClient
+
+A client tool for http://www.imdbapi.com.
+"""
+
 #
 # Configuration
 #
@@ -33,6 +33,19 @@ imdbApiUrl = 'http://www.imdbapi.com/?'
 
 class ImdbApiClient:
 
+    """
+    Client Tool for http://www.imdbapi.com
+
+    @param  imdbApiUrl  URL of A Service Compatible With http://www.imdbapi.com
+    """
+
+    imdbApiUrl = ''
+
+    def __init__(self, imdbApiUrl='http://www.imdbapi.com/?'):
+        self.imdbApiUrl = imdbApiUrl
+
+    def lookup (self, i=None, t=None, y=None, r=None, plot='short',
+                callback=None, tomatoes = None):
     """
     Parameter  |  Value              |  Description
     -------------------------------------------------------------------------
@@ -46,14 +59,6 @@ class ImdbApiClient:
 
     While both i and t are optional at least one argument is required.
     """
-
-    imdbApiUrl = ''
-
-    def __init__(self, imdbApiUrl='http://www.imdbapi.com/?'):
-        self.imdbApiUrl = imdbApiUrl
-
-    def lookup (self, i=None, t=None, y=None, r=None, plot='short',
-                callback=None, tomatoes = None):
 
         # Building the URL
         if i != None: url = imdbApiUrl + urllib.urlencode({'i': i})
