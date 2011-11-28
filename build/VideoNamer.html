@@ -1,0 +1,317 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>VideoNamer Module &mdash; VideoNamer 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="VideoNamer 0.1.1 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">VideoNamer 0.1.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-VideoNamer">
+<span id="videonamer-module"></span><h1>VideoNamer Module<a class="headerlink" href="#module-VideoNamer" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="VideoNamer.Video">
+<em class="property">class </em><tt class="descclassname">VideoNamer.</tt><tt class="descname">Video</tt><big>(</big><em>name=''</em><big>)</big><a class="headerlink" href="#VideoNamer.Video" title="Permalink to this definition">¶</a></dt>
+<dd><p>Self-aware Video Object</p>
+<dl class="attribute">
+<dt id="VideoNamer.Video.audioChannels">
+<tt class="descname">audioChannels</tt><em class="property"> = ''</em><a class="headerlink" href="#VideoNamer.Video.audioChannels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="VideoNamer.Video.audioCodec">
+<tt class="descname">audioCodec</tt><em class="property"> = ''</em><a class="headerlink" href="#VideoNamer.Video.audioCodec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="VideoNamer.Video.audioQuality">
+<tt class="descname">audioQuality</tt><em class="property"> = ''</em><a class="headerlink" href="#VideoNamer.Video.audioQuality" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="VideoNamer.Video.audioSource">
+<tt class="descname">audioSource</tt><em class="property"> = ''</em><a class="headerlink" href="#VideoNamer.Video.audioSource" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="VideoNamer.Video.containerFormat">
+<tt class="descname">containerFormat</tt><em class="property"> = ''</em><a class="headerlink" href="#VideoNamer.Video.containerFormat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="VideoNamer.Video.detectCompoundEncoding">
+<tt class="descname">detectCompoundEncoding</tt><big>(</big><big>)</big><a class="headerlink" href="#VideoNamer.Video.detectCompoundEncoding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detecting Whitespaces Encoded into CamelCase and mixedCase</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="VideoNamer.Video.detectWhitespaceEncoding">
+<tt class="descname">detectWhitespaceEncoding</tt><big>(</big><big>)</big><a class="headerlink" href="#VideoNamer.Video.detectWhitespaceEncoding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detecting Replacement of Whitespace with other Characters</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="VideoNamer.Video.echo">
+<tt class="descname">echo</tt><big>(</big><big>)</big><a class="headerlink" href="#VideoNamer.Video.echo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Echoing This Single Video Using The Gathered Information</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="VideoNamer.Video.filmmaker">
+<tt class="descname">filmmaker</tt><em class="property"> = ''</em><a class="headerlink" href="#VideoNamer.Video.filmmaker" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="VideoNamer.Video.language">
+<tt class="descname">language</tt><em class="property"> = []</em><a class="headerlink" href="#VideoNamer.Video.language" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="VideoNamer.Video.name">
+<tt class="descname">name</tt><em class="property"> = ''</em><a class="headerlink" href="#VideoNamer.Video.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="VideoNamer.Video.parse">
+<tt class="descname">parse</tt><big>(</big><big>)</big><a class="headerlink" href="#VideoNamer.Video.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parsing self.name into Attributes</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="VideoNamer.Video.parsePrefix">
+<tt class="descname">parsePrefix</tt><big>(</big><big>)</big><a class="headerlink" href="#VideoNamer.Video.parsePrefix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parsing an Eventual Prefix into self.prefix</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="VideoNamer.Video.parseSuffix">
+<tt class="descname">parseSuffix</tt><big>(</big><big>)</big><a class="headerlink" href="#VideoNamer.Video.parseSuffix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parsing an Eventual Suffix in this.name into this.suffix</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="VideoNamer.Video.parseTag">
+<tt class="descname">parseTag</tt><big>(</big><em>category</em>, <em>synonym</em><big>)</big><a class="headerlink" href="#VideoNamer.Video.parseTag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="VideoNamer.Video.parseTags">
+<tt class="descname">parseTags</tt><big>(</big><big>)</big><a class="headerlink" href="#VideoNamer.Video.parseTags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parsing the Tags of self.name into self.tags</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="VideoNamer.Video.parseTitle">
+<tt class="descname">parseTitle</tt><big>(</big><big>)</big><a class="headerlink" href="#VideoNamer.Video.parseTitle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parsing the Title Contained in this.name into this.title</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="VideoNamer.Video.parseWhitespace">
+<tt class="descname">parseWhitespace</tt><big>(</big><big>)</big><a class="headerlink" href="#VideoNamer.Video.parseWhitespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parsing White Space Encoding into self.whitespaceCharacter</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="VideoNamer.Video.parseYear">
+<tt class="descname">parseYear</tt><big>(</big><big>)</big><a class="headerlink" href="#VideoNamer.Video.parseYear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parsing the Year Eventually Contained in self.name</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="VideoNamer.Video.prefix">
+<tt class="descname">prefix</tt><em class="property"> = ''</em><a class="headerlink" href="#VideoNamer.Video.prefix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="VideoNamer.Video.releaseGroup">
+<tt class="descname">releaseGroup</tt><em class="property"> = ''</em><a class="headerlink" href="#VideoNamer.Video.releaseGroup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="VideoNamer.Video.requestYear">
+<tt class="descname">requestYear</tt><big>(</big><big>)</big><a class="headerlink" href="#VideoNamer.Video.requestYear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Requesting self.year from IMDB API using ImdbApiClient</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="VideoNamer.Video.tags">
+<tt class="descname">tags</tt><em class="property"> = {'Video Source': [['#SC', 'SC', 'Screener'], ['#TS', 'TS', 'Telesync', 'TeleSync']], 'Video Encoding': [['#MVCD', 'MVCD', 'mvcd'], ['#h264', 'H264', 'h264', 'x264', 'X264'], ['#XViD', 'XVID', 'XViD', 'XviD', 'Xvid', 'xvid']], 'Video Resolution': [['#NTSC', 'NTSC', 'ntsc'], ['#PAL', 'PAL'], ['#720p', '720p'], ['#1080i', '1080i']], 'Release Group': [['#CRiTiCAL', '-CRiTiCAL', 'CRiTiCAL', '-critical'], ['#CRUCiAL', '-CRUCiAL', 'CRUCiAL', '-crucial'], ['#DiViDi', '-DiViDi', 'DiViDi', '-dividi'], ['#iNTERNAL', '-iNTERNAL', 'iNTERNAL', '-internal'], ['#PLEADERS', '-PL', '-PLEADERS', '-Pleaders', '-pleaders'], ['#HDLiTE', '-HDLiTE', '-HDLite', 'HDLiTE', '-HDlite', '-hdlite'], ['#HoRnEtS', '-HoRnEtS', '-Hornets', '-hornets'], ['#NOTRADE', '-NOTRADE', '-NoTrade', '-noTrade', '-notrade'], ['#XMF', '-XMF', '-Xmf', '-xmf']], 'Source Media': [['#BDrip', 'BDRip', 'BDrip', 'bdrip', 'BD', 'BlueRay', 'blueray', 'BlueRayRip', 'bluerayrip', 'BRRIP', 'BRRip', 'BRrip', 'brrip'], ['#DVDrip', 'DVDRip', 'DVDrip', 'DVDRiP', 'DVD rip', 'dvd rip', 'dvdrip', 'DVD', 'DVDR'], ['#HDTVrip', 'HDTVrip', 'hdtvRip', 'HDTVRIP', 'HDTVRip', 'HDTV', 'hdtv']], 'Audio Language': [['#de', 'German', 'german', 'Deutsch', 'deutsch'], ['#en', 'English', 'english', 'Englisch', 'english']], 'Audio Encoding': [['#ac3', 'ac3', 'AC3', 'DTS']], 'Video Version': [['#uncut', 'UNCUT', 'uncut'], ['#proper', 'PROPER', 'proper'], ['#directorsCut', 'Directors Cut', &quot;Director's Cut&quot;]], 'Audio Source': [['#md', 'MD', 'MicDub'], ['#ld', 'LD', 'LineDub', 'Dubbed', 'dubbed', 'linedubbed', 'line dubbed']]}</em><a class="headerlink" href="#VideoNamer.Video.tags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="VideoNamer.Video.title">
+<tt class="descname">title</tt><em class="property"> = []</em><a class="headerlink" href="#VideoNamer.Video.title" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="VideoNamer.Video.videoCodec">
+<tt class="descname">videoCodec</tt><em class="property"> = ''</em><a class="headerlink" href="#VideoNamer.Video.videoCodec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="VideoNamer.Video.videoQuality">
+<tt class="descname">videoQuality</tt><em class="property"> = ''</em><a class="headerlink" href="#VideoNamer.Video.videoQuality" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="VideoNamer.Video.videoSource">
+<tt class="descname">videoSource</tt><em class="property"> = ''</em><a class="headerlink" href="#VideoNamer.Video.videoSource" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="VideoNamer.Video.whitespaceCharacter">
+<tt class="descname">whitespaceCharacter</tt><em class="property"> = ''</em><a class="headerlink" href="#VideoNamer.Video.whitespaceCharacter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="VideoNamer.Video.year">
+<tt class="descname">year</tt><em class="property"> = ''</em><a class="headerlink" href="#VideoNamer.Video.year" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="VideoNamer.Video.yearEndPos">
+<tt class="descname">yearEndPos</tt><em class="property"> = 0</em><a class="headerlink" href="#VideoNamer.Video.yearEndPos" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="VideoNamer.Video.yearStartPos">
+<tt class="descname">yearStartPos</tt><em class="property"> = 0</em><a class="headerlink" href="#VideoNamer.Video.yearStartPos" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="VideoNamer.VideoNamer">
+<em class="property">class </em><tt class="descclassname">VideoNamer.</tt><tt class="descname">VideoNamer</tt><big>(</big><em>videos</em><big>)</big><a class="headerlink" href="#VideoNamer.VideoNamer" title="Permalink to this definition">¶</a></dt>
+<dd><p>High Level Class</p>
+<dl class="method">
+<dt id="VideoNamer.VideoNamer.echo">
+<tt class="descname">echo</tt><big>(</big><big>)</big><a class="headerlink" href="#VideoNamer.VideoNamer.echo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provoking Printing</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="VideoNamer.VideoNamer.makeVideos">
+<tt class="descname">makeVideos</tt><big>(</big><big>)</big><a class="headerlink" href="#VideoNamer.VideoNamer.makeVideos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiating a Movie Object for each Title</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="VideoNamer.VideoNamer.parseDirs">
+<tt class="descname">parseDirs</tt><big>(</big><big>)</big><a class="headerlink" href="#VideoNamer.VideoNamer.parseDirs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parsing the Movie Directory into self.movies</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="VideoNamer.VideoNamer.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="headerlink" href="#VideoNamer.VideoNamer.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parsing and Renaming if needed</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="VideoNamer.VideoNamer.videos">
+<tt class="descname">videos</tt><em class="property"> = []</em><a class="headerlink" href="#VideoNamer.VideoNamer.videos" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="VideoNamer.VideoTool">
+<em class="property">class </em><tt class="descclassname">VideoNamer.</tt><tt class="descname">VideoTool</tt><a class="headerlink" href="#VideoNamer.VideoTool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static Methods used by Video</p>
+<dl class="method">
+<dt id="VideoNamer.VideoTool.stripWhitespaceCharacter">
+<tt class="descname">stripWhitespaceCharacter</tt><big>(</big><em>name</em>, <em>whitespaceCharacter</em><big>)</big><a class="headerlink" href="#VideoNamer.VideoTool.stripWhitespaceCharacter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stripping a Given White Space Character Encoding of the given name</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/VideoNamer.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">VideoNamer 0.1.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Bengt Lüers.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>
