@@ -52,15 +52,17 @@ class ImdbApiClient:
     def lookup (self, i=None, t=None, y=None, r=None, plot='short',
                 callback=None, tomatoes = None):
         """
-        Parameter  |  Value              |  Description
-        -------------------------------------------------------------------------
-        i          |  string (optional)  |  a valid IMDb movie id
-        t          |  string (optional)  |  title of a movie to search for
-        y          |  year (optional)    |  year of the movie
-        r          |  JSON, XML          |  response data type (JSON default)
-        plot       |  short, full        |  short or extended plot (short default)
-        callback   |  name (optional)    |  JSONP callback name
-        tomatoes   |  true (optional)    |  adds rotten tomatoes data
+        =========   =================   ======================================
+        Parameter   Value               Description
+        =========   =================   ======================================
+        i           string (optional)   a valid IMDb movie id
+        t           string (optional)   title of a movie to search for
+        y           year (optional)     year of the movie
+        r           JSON, XML           response data type (JSON default)
+        plot        short, full         short or extended plot (short default)
+        callback    name (optional)     JSONP callback name
+        tomatoes    true (optional)     adds rotten tomatoes data
+        =========   =================   ======================================
 
         While both i and t are optional at least one argument is required.
         """
