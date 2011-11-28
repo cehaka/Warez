@@ -1,5 +1,6 @@
 doc:
-	mkdir ../VideoNamerDoc &> /dev/null
+	if [ ! -d ../VideoNamerDoc ]; then mkdir ../VideoNamerDoc; fi
+
 	cd ../VideoNamerDoc && git init
 	cd ../VideoNamerDoc && git remote add origin git@github.com:bigben87/VideoNamer.git &> /dev/null
 	cd ../VideoNamerDoc && git fetch origin
