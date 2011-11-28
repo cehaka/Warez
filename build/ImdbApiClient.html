@@ -34,6 +34,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li><a href="index.html">VideoNamer 0.1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -43,8 +46,68 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="imdbapiclient-module">
-<h1>ImdbApiClient Module<a class="headerlink" href="#imdbapiclient-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-ImdbApiClient">
+<span id="imdbapiclient-module"></span><h1>ImdbApiClient Module<a class="headerlink" href="#module-ImdbApiClient" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="ImdbApiClient.ImdbApiClient">
+<em class="property">class </em><tt class="descclassname">ImdbApiClient.</tt><tt class="descname">ImdbApiClient</tt><big>(</big><em>imdbApiUrl='http://www.imdbapi.com/?'</em><big>)</big><a class="headerlink" href="#ImdbApiClient.ImdbApiClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Client Tool for <a class="reference external" href="http://www.imdbapi.com">http://www.imdbapi.com</a></p>
+<dl class="attribute">
+<dt id="ImdbApiClient.ImdbApiClient.imdbApiUrl">
+<tt class="descname">imdbApiUrl</tt><em class="property"> = ''</em><a class="headerlink" href="#ImdbApiClient.ImdbApiClient.imdbApiUrl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ImdbApiClient.ImdbApiClient.lookup">
+<tt class="descname">lookup</tt><big>(</big><em>i=None</em>, <em>t=None</em>, <em>y=None</em>, <em>r=None</em>, <em>plot='short'</em>, <em>callback=None</em>, <em>tomatoes=None</em><big>)</big><a class="headerlink" href="#ImdbApiClient.ImdbApiClient.lookup" title="Permalink to this definition">¶</a></dt>
+<dd><table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="27%" />
+<col width="59%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameter</th>
+<th class="head">Value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>i</td>
+<td>string (optional)</td>
+<td>a valid IMDb movie id</td>
+</tr>
+<tr class="row-odd"><td>t</td>
+<td>string (optional)</td>
+<td>title of a movie to search for</td>
+</tr>
+<tr class="row-even"><td>y</td>
+<td>year (optional)</td>
+<td>year of the movie</td>
+</tr>
+<tr class="row-odd"><td>r</td>
+<td>JSON, XML</td>
+<td>response data type (JSON default)</td>
+</tr>
+<tr class="row-even"><td>plot</td>
+<td>short, full</td>
+<td>short or extended plot (short default)</td>
+</tr>
+<tr class="row-odd"><td>callback</td>
+<td>name (optional)</td>
+<td>JSONP callback name</td>
+</tr>
+<tr class="row-even"><td>tomatoes</td>
+<td>true (optional)</td>
+<td>adds rotten tomatoes data</td>
+</tr>
+</tbody>
+</table>
+<p>While both i and t are optional at least one argument is required.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 
@@ -81,6 +144,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li><a href="index.html">VideoNamer 0.1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
