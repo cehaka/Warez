@@ -14,7 +14,10 @@
    id="svg2985"
    version="1.1"
    inkscape:version="0.48.2 r9819"
-   sodipodi:docname="Neues Dokument 2">
+   sodipodi:docname="favicon.svg"
+   inkscape:export-filename="/home/bengt/Projekte/VideoNamerDoc/build/_static/favicon.png"
+   inkscape:export-xdpi="1800"
+   inkscape:export-ydpi="1800">
   <defs
      id="defs2987" />
   <sodipodi:namedview
@@ -24,9 +27,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="44.395604"
-     inkscape:cx="10.779622"
-     inkscape:cy="3.7047804"
+     inkscape:zoom="31.375"
+     inkscape:cx="8.0041721"
+     inkscape:cy="8.6174592"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:grid-bbox="true"
@@ -56,19 +59,98 @@
      id="layer1"
      inkscape:label="Layer 1"
      inkscape:groupmode="layer">
+    <rect
+       style="opacity:0.50000000000000000;fill:#0b29dd;fill-opacity:1;stroke:none"
+       id="rect3014"
+       width="8"
+       height="8"
+       x="0"
+       y="0" />
+    <rect
+       style="opacity:0.50000000000000000;fill:#dddb0b;fill-opacity:1;stroke:none"
+       id="rect3792"
+       width="8"
+       height="8"
+       x="8"
+       y="8" />
+    <rect
+       y="8"
+       x="0"
+       height="8"
+       width="8"
+       id="rect3794"
+       style="opacity:0.50000000000000000;fill:#dd0b0b;fill-opacity:1;stroke:none" />
     <text
        xml:space="preserve"
        style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Droid Sans Mono;-inkscape-font-specification:Droid Sans Mono"
-       x="0.21163347"
-       y="16"
+       x="-0.26693228"
+       y="16.031872"
        id="text2993"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan2995"
-         x="0.21163347"
-         y="16"
-         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Droid Sans Mono;-inkscape-font-specification:Droid Sans Mono"
-         dx="-0.85594058 -1.2839112"
-         dy="-9.26957e-09 -9.26957e-09">vn</tspan></text>
+         x="-0.26693228"
+         y="16.031872"
+         style="font-size:15px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+         dx="0">n</tspan></text>
+    <rect
+       y="0"
+       x="8"
+       height="8"
+       width="8"
+       id="rect3790"
+       style="opacity:0.50000000000000000;fill:#0bdd1b;fill-opacity:1;stroke:none" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text2998"
+       y="7.5817447"
+       x="8.215045"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Droid Sans Mono;-inkscape-font-specification:Droid Sans Mono"
+       xml:space="preserve"><tspan
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:FreeSans;-inkscape-font-specification:FreeSans"
+         y="7.5817447"
+         x="8.215045"
+         id="tspan3000"
+         sodipodi:role="line"
+         dx="0.16129923">o</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="19.601595"
+       y="9.2430277"
+       id="text3002"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3004"
+         x="19.601595"
+         y="9.2430277"
+         style="font-size:14px" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16.17306137px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Droid Sans Mono;-inkscape-font-specification:Droid Sans Mono"
+       x="1.6449978"
+       y="7.8725104"
+       id="text3006"
+       sodipodi:linespacing="125%"><tspan
+         dx="-0.92287862"
+         dy="-9.9944879e-09"
+         sodipodi:role="line"
+         id="tspan3008"
+         x="1.6449978"
+         y="7.8725104"
+         style="font-size:15px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:FreeSans;-inkscape-font-specification:FreeSans">v</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3010"
+       y="15.968126"
+       x="8.6254969"
+       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Droid Sans Mono;-inkscape-font-specification:Droid Sans Mono"
+       xml:space="preserve"><tspan
+         dx="-0.79681277"
+         style="font-size:15px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+         y="15.968126"
+         x="8.6254969"
+         id="tspan3012"
+         sodipodi:role="line">r</tspan></text>
   </g>
 </svg>
