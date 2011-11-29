@@ -28,10 +28,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="31.375"
-     inkscape:cx="8.0041721"
-     inkscape:cy="8.6174592"
+     inkscape:cx="6.7611442"
+     inkscape:cy="8.9043118"
      inkscape:current-layer="layer1"
-     showgrid="true"
+     showgrid="false"
      inkscape:grid-bbox="true"
      inkscape:document-units="px"
      inkscape:window-width="1366"
@@ -60,14 +60,14 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer">
     <rect
-       style="opacity:0.50000000000000000;fill:#0b29dd;fill-opacity:1;stroke:none"
+       style="opacity:0.50000000000000000;fill:#57ff47;fill-opacity:1;stroke:none"
        id="rect3014"
        width="8"
        height="8"
        x="0"
        y="0" />
     <rect
-       style="opacity:0.50000000000000000;fill:#dddb0b;fill-opacity:1;stroke:none"
+       style="opacity:0.50000000000000000;fill:#e3ff47;fill-opacity:1;stroke:none"
        id="rect3792"
        width="8"
        height="8"
@@ -79,7 +79,7 @@
        height="8"
        width="8"
        id="rect3794"
-       style="opacity:0.50000000000000000;fill:#dd0b0b;fill-opacity:1;stroke:none" />
+       style="opacity:0.50000000000000000;fill:#4759ff;fill-opacity:1;stroke:none" />
     <text
        xml:space="preserve"
        style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Droid Sans Mono;-inkscape-font-specification:Droid Sans Mono"
@@ -99,7 +99,7 @@
        height="8"
        width="8"
        id="rect3790"
-       style="opacity:0.50000000000000000;fill:#0bdd1b;fill-opacity:1;stroke:none" />
+       style="opacity:0.50000000000000000;fill:#ff475c;fill-opacity:1;stroke:none" />
     <text
        sodipodi:linespacing="125%"
        id="text2998"
