@@ -50,7 +50,7 @@
 <span id="video-module"></span><h1>Video Module<a class="headerlink" href="#module-Video" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="Video.Video">
-<em class="property">class </em><tt class="descclassname">Video.</tt><tt class="descname">Video</tt><big>(</big><em>name=''</em><big>)</big><a class="headerlink" href="#Video.Video" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">Video.</tt><tt class="descname">Video</tt><big>(</big><em>dirName=''</em><big>)</big><a class="headerlink" href="#Video.Video" title="Permalink to this definition">¶</a></dt>
 <dd><p>Self-aware Video Object</p>
 <dl class="attribute">
 <dt id="Video.Video.audioChannels">
@@ -89,10 +89,15 @@
 <dd><p>Detecting Replacement of Whitespace with other Characters</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="Video.Video.dirName">
+<tt class="descname">dirName</tt><em class="property"> = ''</em><a class="headerlink" href="#Video.Video.dirName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="Video.Video.echo">
 <tt class="descname">echo</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.echo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Echoing This Single Video Using The Gathered Information</p>
+<dd><p>Echoing this single video.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -105,15 +110,10 @@
 <tt class="descname">language</tt><em class="property"> = []</em><a class="headerlink" href="#Video.Video.language" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
-<dt id="Video.Video.name">
-<tt class="descname">name</tt><em class="property"> = ''</em><a class="headerlink" href="#Video.Video.name" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="Video.Video.parse">
 <tt class="descname">parse</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.parse" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parsing self.name into Attributes</p>
+<dd><p>Parsing self.dirName into Attributes</p>
 </dd></dl>
 
 <dl class="method">
@@ -125,7 +125,7 @@
 <dl class="method">
 <dt id="Video.Video.parseSuffix">
 <tt class="descname">parseSuffix</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.parseSuffix" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parsing an Eventual Suffix in this.name into this.suffix</p>
+<dd><p>Parsing an Eventual Suffix in this.dirName into this.suffix</p>
 </dd></dl>
 
 <dl class="method">
@@ -136,14 +136,13 @@
 <dl class="method">
 <dt id="Video.Video.parseTags">
 <tt class="descname">parseTags</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.parseTags" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parsing the Tags of self.name into self.tags</p>
+<dd><p>Parsing the Tags of self.dirName into self.tags</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="Video.Video.parseTitle">
 <tt class="descname">parseTitle</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.parseTitle" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parsing the Title Contained in this.name into this.title</p>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="Video.Video.parseWhitespace">
@@ -154,7 +153,7 @@
 <dl class="method">
 <dt id="Video.Video.parseYear">
 <tt class="descname">parseYear</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.parseYear" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parsing the Year Eventually Contained in self.name</p>
+<dd><p>Parsing the Year Eventually Contained in self.dirName</p>
 </dd></dl>
 
 <dl class="attribute">
