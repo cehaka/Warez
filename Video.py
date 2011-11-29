@@ -23,7 +23,7 @@ class Video:
 
     # Input
 
-    name = ''
+    dirName = ''
 
     # Technical Things
 
@@ -116,18 +116,18 @@ class Video:
         ]
     }
 
-    def __init__ (self, name = ''):
+    def __init__ (self, dirName = ''):
         """
         Attribute Writing Constructor
 
-        @param  name    Name of the directory represented by this video.
+        @param  dirName    Name of the directory represented by this video.
         """
 
         # Cleaning out eventual line-endings
-        if name.endswith('\n'): name = name[:-1]
+        if dirName.endswith('\n'): dirName = dirName[:-1]
 
         # Writing the initial attribute
-        self.name = name
+        self.dirName = dirName
 
         # Parsing the initial attribute into all
         self.parse()
@@ -136,7 +136,7 @@ class Video:
         #self.writeBack()
 
     def parse (self):
-        """Parsing self.name into Attributes"""
+        """Parsing self.dirName into Attributes"""
 
         self.parsePrefix()
         self.parseWhitespace()
@@ -149,7 +149,7 @@ class Video:
 
         knownPrefixes = ['www.torrent.to...', 'www.ubb.to']
         for prefix in knownPrefixes:
-            if self.name.startswith(prefix):
+            if self.dirName.startswith(prefix):
                 self.prefix = prefix
 
     def parseWhitespace (self):
@@ -164,7 +164,7 @@ class Video:
         if self.whitespaceCharacter != '': return
 
         print 'Warning: Neither a whitespace character nor caseEncoding was detected:'
-        print self.name
+        print self.dirName
 
     def  detectWhitespaceEncoding (self):
         """Detecting Replacement of Whitespace with other Characters"""
@@ -177,7 +177,7 @@ class Video:
         underscores = 0
         nonLetters = 0
 
-        for char in self.name:
+        for char in self.dirName:
             if char == '.': dots += 1
             if char == '-': hyphens += 1
             if char == ' ': spaces += 1
@@ -217,22 +217,22 @@ class Video:
         upperLetters = 0
         lowerLetters = 0
 
-        for char in self.name:
+        for char in self.dirName:
             if char.isupper(): upperLetters += 1
             if char.islower(): lowerLetters += 1
 
         if lowerLetters >= upperLetters and \
         upperLetters != 0 and \
-        self.name[0].isupper:
+        self.dirName[0].isupper:
             self.whitespaceCharacter = 'CamelCase'
 
         if lowerLetters >= upperLetters and \
         upperLetters != 0 and \
-        self.name[0].islower:
+        self.dirName[0].islower:
             self.whitespaceCharacter = 'mixedCase'
 
     def parseYear (self):
-        """Parsing the Year Eventually Contained in self.name"""
+        """Parsing the Year Eventually Contained in self.dirName"""
 
         # Finding the year
         year = 0
@@ -240,7 +240,7 @@ class Video:
         # Finding four consecutive numbers
         numberCount = 0
         yearEndPos = 0
-        for char in self.name:
+        for char in self.dirName:
             if char.isdigit():
                 numberCount += 1
             else:
@@ -250,7 +250,7 @@ class Video:
 
             # Breaking on finding a year
             if numberCount == 4:
-                year = self.name[yearStartPos:yearEndPos]
+                year = self.dirName[yearStartPos:yearEndPos]
 
                 # sanity check
                 if int(year) not in range(1860, 2020):
@@ -261,16 +261,16 @@ class Video:
                 break
 
         # Checking whether a year was found after all
-        if yearEndPos == len(self.name): return 0, 0, 0
+        if yearEndPos == len(self.dirName): return 0, 0, 0
         if year == 0: return 0, 0, 0
 
         # Finding the whole tag
         try:
-            opener = self.name[yearStartPos - 1]
+            opener = self.dirName[yearStartPos - 1]
         except IndexError:
             opener = ''
         try:
-            closer = self.name[yearEndPos]
+            closer = self.dirName[yearEndPos]
         except IndexError:
             closer = ''
 
@@ -285,7 +285,7 @@ class Video:
             opener = ''
             closer = ''
 
-        #print 'Year found:', opener, year, closer, self.name[yearStartPos:yearEndPos], self.name
+        #print 'Year found:', opener, year, closer, self.dirName[yearStartPos:yearEndPos], self.dirName
 
         self.yearStartPos = yearStartPos
         self.year = year
@@ -299,7 +299,7 @@ class Video:
         iac.lookup(None, self.title)
 
     def parseTags (self):
-        """Parsing the Tags of self.name into self.tags"""
+        """Parsing the Tags of self.dirName into self.tags"""
 
         for category in self.tags:
             for synonyms in self.tags[category]:
@@ -310,8 +310,8 @@ class Video:
 
     def parseTag (self, category, synonym):
 
-        # Checking That The Tag Is in self.name
-        if synonym not in self.name: return
+        # Checking That The Tag Is in self.dirName
+        if synonym not in self.dirName: return
 
         # Determining The Hash Tag
         for synonyms in self.tags[category]:
@@ -330,39 +330,51 @@ class Video:
         if category == 'Video Version': self.videoVersion= hashTag
 
     def parseSuffix (self):
-        """Parsing an Eventual Suffix in this.name into this.suffix"""
+        """Parsing an Eventual Suffix in this.dirName into this.suffix"""
 
         knownSuffixes = [
             '.shared.for.saugstube.to.mpg'
         ]
 
+        # Repeating until there is no further suffix to be found.
+        breakCondition = False
+        while breakContidition:
+
+            breakCondition = True
+            for suffix in knownSuffixes:
+
+                if self.dirName.endswith(suffix):
+                    self.suffixes += suffix
+                    breakCondition = False
+                    break
+
     def parseTitle (self):
-        """Parsing the Title Contained in this.name into this.title"""
+        """Parsing the title contained in this.dirName into this.title using all other attributes."""
 
         # Overwriting all parsed attributes with whitespace
-        name = self.name
-        print name
+        dirName = self.dirName
+        print dirName
 
         if self.yearStartPos != 0 and self.yearEndPos != 0:
 
             # Adding an additional whitespace after the year tag position
             extension = ' '
             try:
-                self.name[self.yearEndPos + 1]
+                self.dirName[self.yearEndPos + 1]
             except IndexError:
                 extension = ''
 
             # Adding 4 or 6 spaces as appropriate
             if self.yearEndPos - self.yearStartPos == 4:
-                    name = name[:self.yearStartPos] + '    ' + extension + name[self.yearEndPos:]
+                    dirName = dirName[:self.yearStartPos] + '    ' + extension + dirName[self.yearEndPos:]
 
             if self.yearEndPos - self.yearStartPos == 6:
-                    name = name[:self.yearStartPos] + '      ' + extension + name[self.yearEndPos:]
+                    dirName = dirName[:self.yearStartPos] + '      ' + extension + dirName[self.yearEndPos:]
 
         # Stripping of the superfluous whitespace
         whitespacesInRow = 0
         title = ''
-        for char in name:
+        for char in dirName:
             if char == ' ':
                 whitespacesInRow += 1
             else:
@@ -380,36 +392,19 @@ class Video:
         print title
 
 
-    def echo (self):
-        """Echoing This Single Video Using The Gathered Information"""
+    def parseTitle (self):
 
-        # Striping the prefix
-        name = self.name[len(self.prefix):]
+        # Stripping the prefix
+        dirName = self.dirName[len(self.prefix):]
 
         # Stripping eventual whitespaces
         mt = VideoTool.VideoTool()
-        name = mt.stripWhitespaceCharacter(name, self.whitespaceCharacter)
+        dirName = mt.stripWhitespaceCharacter(dirName, self.whitespaceCharacter)
 
-        print 'Name:', name, '\n',\
+    def echo (self):
+        """Echoing this single video."""
+
         self.printAttributes()
-
-              #' Prefix:', self.prefix, '\n',\
-              #' Title:', self.title, '\n',\
-              #' Year:',self.year, '\n',\
-              #' Audio Channels:', self.audioChannels , '\n',\
-              #' Audio Codec:', self.audioCodec , '\n',\
-              #' Audio Quality:', self.audioQuality , '\n',\
-              #' Audio Source:', self.audioSource , '\n',\
-              #' Container Format:', self.containerFormat , '\n',\
-              #' Filmmaker:', self.filmmaker , '\n',\
-              #' Language:', self.language , '\n',\
-              #' Prefix:', self.prefix , '\n',\
-              #' Release Group:', self.releaseGroup , '\n',\
-              #' Title:', self.title , '\n',\
-              #' Video Codec:', self. , '\n',\
-              #' :', self. , '\n',\
-              #' :', self. , '\n',\
-              #' :', self. , '\n',\
 
     def printMethods(self):
         """Printing all methods of this object and their docstring."""

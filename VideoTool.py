@@ -24,46 +24,61 @@ class VideoTool:
 
         pass
 
-    def stripWhitespaceCharacter (self, name, whitespaceCharacter):
-        """Stripping a Given White Space Character Encoding of the given name"""
+    def stripWhitespaceCharacter (self, nameEncoded, whitespaceCharacter):
+        """
+        Generating a name with reals spaces.
+        Returns the nameEncoded with decoded spaces.
+        See decode* methods for details.
+        """
 
-        newName = ''
+        nameDecoded = ''
 
         # Trivial case: whitespace character is empty
         if len(whitespaceCharacter) == 0:
 
             # Doing nothing
-            newName = name
+            nameDecoded = nameEncoded
 
         # Regular case: whitespace character is set
         if len(whitespaceCharacter) == 1:
-
-            # Re-constructing the name
-            words = name.split(whitespaceCharacter)
-            for word in words:
-                # Skipping all non-words
-                if word == whitespaceCharacter: continue
-
-                # Skipping all empty words
-                if word == '': continue
-
-                # Adding space for all n + 1 words
-                if newName != '': newName = newName + ' '
-
-                newName = newName + word
+            nameDecoded = self.decodeSingleCharacter(nameEncoded, whitespaceCharacter)
 
         # Special case: The whitespace is encoded into the cases
         if whitespaceCharacter == 'CamelCase' or whitespaceCharacter == 'mixedCase':
+            nameDecoded = self.decodeCases(nameEncoded)
 
-            # Introducing whitespaces before each upper case letter
-            for char in name:
+        return nameDecoded
 
-                if char.isupper(): newName += ' '
+    def decodeSingleCharacter (self, nameEncoded, whitespaceCharacter):
+        """Translating a given single character into whitespaces."""
 
-                newName += char
+        # Re-constructing the nameEncoded
+        nameDecoded = ''
+        words = nameEncoded.split(whitespaceCharacter)
+        for word in words:
+            # Skipping all non-words
+            if word == whitespaceCharacter: continue
 
-            # Stripping heading whitespace introduced by CamelCase
-            if newName.startswith(''): newName = newName[1:]
+            # Skipping all empty words
+            if word == '': continue
 
-        #print 'stripWhitespaceCharacter:', name, whitespaceCharacter, newName
-        return newName
+            # Adding space for all n + 1 words
+            if nameDecoded != '':
+                nameDecoded = nameDecoded + ' '
+
+            nameDecoded = nameDecoded + word
+
+        return nameDecoded
+
+    def decodeCases (self, nameEncoded):
+        """Introducing whitespaces before each upper case letter."""
+
+        nameDecoded = ''
+        for char in nameEncoded:
+            if char.isupper(): nameDecoded += ' '
+            nameDecoded += char
+
+        # Stripping heading whitespace introduced by CamelCase
+        if nameDecoded.startswith(' '): nameDecoded = nameDecoded[1:]
+
+        return nameDecoded
