@@ -54,61 +54,8 @@
 <em class="property">class </em><tt class="descclassname">Video.</tt><tt class="descname">Video</tt><big>(</big><em>dirName=''</em><big>)</big><a class="headerlink" href="#Video.Video" title="Permalink to this definition">¶</a></dt>
 <dd><p>Self-aware Video Object</p>
 <dl class="attribute">
-<dt id="Video.Video.audioChannels">
-<tt class="descname">audioChannels</tt><em class="property"> = ''</em><a class="headerlink" href="#Video.Video.audioChannels" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Video.Video.audioCodec">
-<tt class="descname">audioCodec</tt><em class="property"> = ''</em><a class="headerlink" href="#Video.Video.audioCodec" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Video.Video.audioQuality">
-<tt class="descname">audioQuality</tt><em class="property"> = ''</em><a class="headerlink" href="#Video.Video.audioQuality" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Video.Video.audioSource">
-<tt class="descname">audioSource</tt><em class="property"> = ''</em><a class="headerlink" href="#Video.Video.audioSource" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Video.Video.containerFormat">
-<tt class="descname">containerFormat</tt><em class="property"> = ''</em><a class="headerlink" href="#Video.Video.containerFormat" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="Video.Video.detectCompoundEncoding">
-<tt class="descname">detectCompoundEncoding</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.detectCompoundEncoding" title="Permalink to this definition">¶</a></dt>
-<dd><p>Detecting Whitespaces Encoded into CamelCase and mixedCase</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="Video.Video.detectWhitespaceEncoding">
-<tt class="descname">detectWhitespaceEncoding</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.detectWhitespaceEncoding" title="Permalink to this definition">¶</a></dt>
-<dd><p>Detecting Replacement of Whitespace with other Characters</p>
-</dd></dl>
-
-<dl class="attribute">
 <dt id="Video.Video.dirName">
 <tt class="descname">dirName</tt><em class="property"> = ''</em><a class="headerlink" href="#Video.Video.dirName" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="Video.Video.echo">
-<tt class="descname">echo</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.echo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Echoing this single video.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="Video.Video.filmmaker">
-<tt class="descname">filmmaker</tt><em class="property"> = ''</em><a class="headerlink" href="#Video.Video.filmmaker" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Video.Video.language">
-<tt class="descname">language</tt><em class="property"> = []</em><a class="headerlink" href="#Video.Video.language" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -118,21 +65,40 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="Video.Video.parsePrefix">
-<tt class="descname">parsePrefix</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.parsePrefix" title="Permalink to this definition">¶</a></dt>
+<dt id="Video.Video.parseEncoding">
+<tt class="descname">parseEncoding</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.parseEncoding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parsing White Space Encoding into self.spaceCharacter</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Video.Video.parseEncodingCompound">
+<tt class="descname">parseEncodingCompound</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.parseEncodingCompound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detecting Whitespaces Encoded into CamelCase and mixedCase</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Video.Video.parseEncodingWhitespace">
+<tt class="descname">parseEncodingWhitespace</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.parseEncodingWhitespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detecting Replacement of Whitespace with other Characters</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Video.Video.parsePrefixes">
+<tt class="descname">parsePrefixes</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.parsePrefixes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parsing an Eventual Prefix into self.prefix</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="Video.Video.parseSuffix">
-<tt class="descname">parseSuffix</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.parseSuffix" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parsing an Eventual Suffix in this.dirName into this.suffix</p>
+<dt id="Video.Video.parseSuffixes">
+<tt class="descname">parseSuffixes</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.parseSuffixes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parsing an eventual Suffixes in this.dirName into this.suffixes.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="Video.Video.parseTag">
 <tt class="descname">parseTag</tt><big>(</big><em>category</em>, <em>synonym</em><big>)</big><a class="headerlink" href="#Video.Video.parseTag" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Parsing a single given synonym of a given category into self.tags</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="Video.Video.parseTags">
@@ -143,12 +109,7 @@
 <dl class="method">
 <dt id="Video.Video.parseTitle">
 <tt class="descname">parseTitle</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.parseTitle" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="Video.Video.parseWhitespace">
-<tt class="descname">parseWhitespace</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.parseWhitespace" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parsing White Space Encoding into self.whitespaceCharacter</p>
+<dd><p>Parsing the title from self.dirName into self.title, using self.*</p>
 </dd></dl>
 
 <dl class="method">
@@ -158,8 +119,8 @@
 </dd></dl>
 
 <dl class="attribute">
-<dt id="Video.Video.prefix">
-<tt class="descname">prefix</tt><em class="property"> = ''</em><a class="headerlink" href="#Video.Video.prefix" title="Permalink to this definition">¶</a></dt>
+<dt id="Video.Video.prefixes">
+<tt class="descname">prefixes</tt><em class="property"> = []</em><a class="headerlink" href="#Video.Video.prefixes" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -180,60 +141,30 @@
 <dd><p>Printing all methods of this object and their docstring.</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="Video.Video.releaseGroup">
-<tt class="descname">releaseGroup</tt><em class="property"> = ''</em><a class="headerlink" href="#Video.Video.releaseGroup" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="Video.Video.requestYear">
 <tt class="descname">requestYear</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.requestYear" title="Permalink to this definition">¶</a></dt>
-<dd><p>Requesting self.year from IMDB API using ImdbApiClient</p>
+<dd><p>Requesting self.tags[&#8216;year&#8217;] from IMDB API using ImdbApiClient</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="Video.Video.spaceCharacter">
+<tt class="descname">spaceCharacter</tt><em class="property"> = ''</em><a class="headerlink" href="#Video.Video.spaceCharacter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Video.Video.suffixes">
+<tt class="descname">suffixes</tt><em class="property"> = []</em><a class="headerlink" href="#Video.Video.suffixes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="Video.Video.tags">
-<tt class="descname">tags</tt><em class="property"> = {'Video Source': [['#SC', 'SC', 'Screener'], ['#TS', 'TS', 'Telesync', 'TeleSync']], 'Video Encoding': [['#MVCD', 'MVCD', 'mvcd'], ['#h264', 'H264', 'h264', 'x264', 'X264'], ['#XViD', 'XVID', 'XViD', 'XviD', 'Xvid', 'xvid']], 'Video Resolution': [['#NTSC', 'NTSC', 'ntsc'], ['#PAL', 'PAL'], ['#720p', '720p'], ['#1080i', '1080i']], 'Release Group': [['#CRiTiCAL', '-CRiTiCAL', 'CRiTiCAL', '-critical'], ['#CRUCiAL', '-CRUCiAL', 'CRUCiAL', '-crucial'], ['#DiViDi', '-DiViDi', 'DiViDi', '-dividi'], ['#iNTERNAL', '-iNTERNAL', 'iNTERNAL', '-internal'], ['#PLEADERS', '-PL', '-PLEADERS', '-Pleaders', '-pleaders'], ['#HDLiTE', '-HDLiTE', '-HDLite', 'HDLiTE', '-HDlite', '-hdlite'], ['#HoRnEtS', '-HoRnEtS', '-Hornets', '-hornets'], ['#NOTRADE', '-NOTRADE', '-NoTrade', '-noTrade', '-notrade'], ['#XMF', '-XMF', '-Xmf', '-xmf'], ['#KiNOWELT', '-KiNOWELT', '-kinowelt']], 'Source Media': [['#BDrip', 'BDRip', 'BDrip', 'bdrip', 'BD', 'BlueRay', 'blueray', 'BlueRayRip', 'bluerayrip', 'BRRIP', 'BRRip', 'BRrip', 'brrip'], ['#DVDrip', 'DVDRip', 'DVDrip', 'DVDRiP', 'DVD rip', 'dvd rip', 'dvdrip', 'DVD', 'DVDR'], ['#HDTVrip', 'HDTVrip', 'hdtvRip', 'HDTVRIP', 'HDTVRip', 'HDTV', 'hdtv']], 'Audio Language': [['#de', 'German', 'german', 'Deutsch', 'deutsch'], ['#en', 'English', 'english', 'Englisch', 'english']], 'Audio Encoding': [['#ac3', 'ac3', 'AC3', 'DTS']], 'Video Version': [['#uncut', 'UNCUT', 'uncut'], ['#proper', 'PROPER', 'proper'], ['#directorsCut', 'Directors Cut', &quot;Director's Cut&quot;]], 'Audio Source': [['#md', 'MD', 'MicDub'], ['#ld', 'LD', 'LineDub', 'Dubbed', 'dubbed', 'linedubbed', 'line dubbed']]}</em><a class="headerlink" href="#Video.Video.tags" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">tags</tt><em class="property"> = {'video source': {'start': 0, 'end': 0, 'value': ''}, 'subtitle language': {'start': 0, 'end': 0, 'value': ''}, 'audio channels': {'start': 0, 'end': 0, 'value': ''}, 'filmmaker': {'start': 0, 'end': 0, 'value': ''}, 'year': {'start': 0, 'end': 0, 'value': ''}, 'container format': {'start': 0, 'end': 0, 'value': ''}, 'audio language': {'start': 0, 'end': 0, 'value': ''}, 'audio source': {'start': 0, 'end': 0, 'value': ''}, 'release group': {'start': 0, 'end': 0, 'value': ''}, 'video codec': {'start': 0, 'end': 0, 'value': ''}, 'audio codec': {'start': 0, 'end': 0, 'value': ''}}</em><a class="headerlink" href="#Video.Video.tags" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="Video.Video.title">
 <tt class="descname">title</tt><em class="property"> = []</em><a class="headerlink" href="#Video.Video.title" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Video.Video.videoCodec">
-<tt class="descname">videoCodec</tt><em class="property"> = ''</em><a class="headerlink" href="#Video.Video.videoCodec" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Video.Video.videoQuality">
-<tt class="descname">videoQuality</tt><em class="property"> = ''</em><a class="headerlink" href="#Video.Video.videoQuality" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Video.Video.videoSource">
-<tt class="descname">videoSource</tt><em class="property"> = ''</em><a class="headerlink" href="#Video.Video.videoSource" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Video.Video.whitespaceCharacter">
-<tt class="descname">whitespaceCharacter</tt><em class="property"> = ''</em><a class="headerlink" href="#Video.Video.whitespaceCharacter" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Video.Video.year">
-<tt class="descname">year</tt><em class="property"> = ''</em><a class="headerlink" href="#Video.Video.year" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Video.Video.yearEndPos">
-<tt class="descname">yearEndPos</tt><em class="property"> = 0</em><a class="headerlink" href="#Video.Video.yearEndPos" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="Video.Video.yearStartPos">
-<tt class="descname">yearStartPos</tt><em class="property"> = 0</em><a class="headerlink" href="#Video.Video.yearStartPos" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
