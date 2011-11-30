@@ -17,6 +17,8 @@
 #       MA 02110-1301, USA.
 
 import VideoTool
+import pprint
+import types
 
 class Video:
     """Self-aware Video Object"""
@@ -26,95 +28,29 @@ class Video:
     dirName = ''
 
     # Technical Things
+    spaceCharacter = ''
 
-    prefix = ''
-    whitespaceCharacter = ''
-
-    # Title and Year
-
-    title = []
-    yearStartPos = 0
-    year = ''
-    yearEndPos = 0
-
-    # Tags
-
-    audioChannels = ''
-    audioCodec = ''
-    audioQuality = ''
-    audioSource = ''
-    containerFormat = ''
-    filmmaker = ''
-    language = []
-    videoCodec = ''
-    videoQuality = ''
-    videoSource = ''
-    releaseGroup = ''
-
-    # Tag Aliases
+    # Things in self.dirName
+    prefixes = []
+    suffixes = []
 
     tags = {
-
-        'Audio Encoding':[\
-            ['#ac3', 'ac3', 'AC3', 'DTS']
-        ],
-
-        'Audio Language':[\
-            ['#de', 'German', 'german', 'Deutsch', 'deutsch'],
-            ['#en', 'English', 'english', 'Englisch', 'english']
-        ],
-
-        'Audio Source':[\
-            ['#md', 'MD', 'MicDub'],
-            ['#ld', 'LD', 'LineDub', 'Dubbed', 'dubbed', 'linedubbed', 'line dubbed']
-        ],
-
-        'Video Version':[\
-            ['#uncut', 'UNCUT', 'uncut'],
-            ['#proper', 'PROPER', 'proper'],
-            ['#directorsCut', 'Directors Cut', 'Director\'s Cut']
-        ],
-
-        'Release Group':[\
-            ['#CRiTiCAL', '-CRiTiCAL', 'CRiTiCAL', '-critical'],
-            ['#CRUCiAL', '-CRUCiAL', 'CRUCiAL', '-crucial'],
-            ['#DiViDi', '-DiViDi', 'DiViDi', '-dividi'],
-            ['#iNTERNAL', '-iNTERNAL', 'iNTERNAL', '-internal'],
-            ['#PLEADERS', '-PL', '-PLEADERS', '-Pleaders', '-pleaders'],
-            ['#HDLiTE', '-HDLiTE', '-HDLite', 'HDLiTE', '-HDlite', '-hdlite'],
-            ['#HoRnEtS', '-HoRnEtS', '-Hornets', '-hornets'],
-            ['#NOTRADE', '-NOTRADE', '-NoTrade', '-noTrade', '-notrade'],
-            ['#XMF', '-XMF', '-Xmf', '-xmf'],
-            ['#KiNOWELT', '-KiNOWELT', '-kinowelt']
-        ],
-
-        'Source Media':[\
-            ['#BDrip', 'BDRip', 'BDrip', 'bdrip', 'BD',
-                'BlueRay', 'blueray', 'BlueRayRip', 'bluerayrip',
-                'BRRIP', 'BRRip', 'BRrip', 'brrip'],
-            ['#DVDrip', 'DVDRip', 'DVDrip', 'DVDRiP', 'DVD rip', 'dvd rip',
-                'dvdrip', 'DVD', 'DVDR'],
-            ['#HDTVrip', 'HDTVrip', 'hdtvRip', 'HDTVRIP', 'HDTVRip', 'HDTV', 'hdtv']
-        ],
-
-        'Video Encoding':[\
-            ['#MVCD', 'MVCD', 'mvcd'],
-            ['#h264', 'H264', 'h264', 'x264', 'X264'],
-            ['#XViD', 'XVID', 'XViD', 'XviD', 'Xvid', 'xvid']
-        ],
-
-        'Video Resolution':[\
-            ['#NTSC', 'NTSC', 'ntsc'],
-            ['#PAL', 'PAL'],
-            ['#720p', '720p'],
-            ['#1080i', '1080i']
-        ],
-
-        'Video Source':[\
-            ['#SC', 'SC', 'Screener'],
-            ['#TS', 'TS', 'Telesync', 'TeleSync']
-        ]
+        'year': {'value': '', 'end': 0, 'start': 0},
+        'audio channels': {'value': '', 'end': 0, 'start': 0},
+        'audio codec': {'value': '', 'end': 0, 'start': 0},
+        'audio language': {'value': '', 'end': 0, 'start': 0},
+        'audio source': {'value': '', 'end': 0, 'start': 0},
+        'container format': {'value': '', 'end': 0, 'start': 0},
+        'filmmaker': {'value': '', 'end': 0, 'start': 0},
+        'video codec': {'value': '', 'end': 0, 'start': 0},
+        'video source': {'value': '', 'end': 0, 'start': 0},
+        'release group': {'value': '', 'end': 0, 'start': 0},
+        'subtitle language': {'value': '', 'end': 0, 'start': 0}
     }
+
+    # Output
+
+    title = []
 
     def __init__ (self, dirName = ''):
         """
@@ -122,6 +58,9 @@ class Video:
 
         @param  dirName    Name of the directory represented by this video.
         """
+
+        # Getting a VideoTool instance
+        self.vT = VideoTool.VideoTool()
 
         # Cleaning out eventual line-endings
         if dirName.endswith('\n'): dirName = dirName[:-1]
@@ -133,43 +72,37 @@ class Video:
         self.parse()
 
         # Writing back the Changes
-        #self.writeBack()
+        #self.rename()
 
     def parse (self):
         """Parsing self.dirName into Attributes"""
 
-        self.parsePrefix()
-        self.parseWhitespace()
+        self.parsePrefixes()
+        self.parseSuffixes()
+        self.parseEncoding()
         self.parseYear()
         self.parseTags()
         self.parseTitle()
 
-    def parsePrefix (self):
-        """Parsing an Eventual Prefix into self.prefix"""
+    def parseEncoding (self):
+        """Parsing White Space Encoding into self.spaceCharacter"""
 
-        knownPrefixes = ['www.torrent.to...', 'www.ubb.to']
-        for prefix in knownPrefixes:
-            if self.dirName.startswith(prefix):
-                self.prefix = prefix
+        self.parseEncodingWhitespace()
 
-    def parseWhitespace (self):
-        """Parsing White Space Encoding into self.whitespaceCharacter"""
+        if self.spaceCharacter != '': return
 
-        self.detectWhitespaceEncoding()
+        self.parseEncodingCompound()
 
-        if self.whitespaceCharacter != '': return
+        if self.spaceCharacter != '': return
 
-        self.detectCompoundEncoding()
+        print 'Warning:' + \
+              'Neither a space character nor caseEncoding was detected:' + \
+               self.dirName
 
-        if self.whitespaceCharacter != '': return
-
-        print 'Warning: Neither a whitespace character nor caseEncoding was detected:'
-        print self.dirName
-
-    def  detectWhitespaceEncoding (self):
+    def  parseEncodingWhitespace (self):
         """Detecting Replacement of Whitespace with other Characters"""
 
-        # Count potential whitespace characters
+        # Count potential space characters
 
         dots = 0
         hyphens = 0
@@ -183,35 +116,33 @@ class Video:
             if char == ' ': spaces += 1
             if char == '_': underscores += 1
 
-        #print 'detectWhitespaceEncoding:', dots, hyphens, spaces, underscores, nonLetters
-
         # choosing the most-common non-letter character
 
         if dots >= spaces and \
         dots >= hyphens and \
         dots >= underscores and \
         dots != 0:
-            self.whitespaceCharacter = '.'
+            self.spaceCharacter = '.'
 
         if spaces >= dots and \
         spaces >= hyphens and \
         spaces >= underscores and \
         spaces != 0:
-            self.whitespaceCharacter = ' '
+            self.spaceCharacter = ' '
 
         if underscores >= dots and \
         underscores >= hyphens  and \
         underscores >= spaces and \
         underscores != 0:
-            self.whitespaceCharacter = '_'
+            self.spaceCharacter = '_'
 
         if hyphens >= dots and \
         hyphens >= underscores and \
         hyphens >= spaces and \
         hyphens != 0:
-            self.whitespaceCharacter = '-'
+            self.spaceCharacter = '-'
 
-    def detectCompoundEncoding (self):
+    def parseEncodingCompound (self):
         """Detecting Whitespaces Encoded into CamelCase and mixedCase"""
 
         upperLetters = 0
@@ -224,12 +155,64 @@ class Video:
         if lowerLetters >= upperLetters and \
         upperLetters != 0 and \
         self.dirName[0].isupper:
-            self.whitespaceCharacter = 'CamelCase'
+            self.spaceCharacter = 'CamelCase'
 
         if lowerLetters >= upperLetters and \
         upperLetters != 0 and \
         self.dirName[0].islower:
-            self.whitespaceCharacter = 'mixedCase'
+            self.spaceCharacter = 'mixedCase'
+
+    def parsePrefixes (self):
+        """Parsing an Eventual Prefix into self.prefix"""
+
+        knownPrefixes = [
+            'www.torrent.to...',
+            'www.ubb.to'
+        ]
+
+        self.prefixes = [] # HACK I don't know why, but this is necessary.
+
+        # Repeating until there is no further prefix to be found.
+        dirNameTemp = self.dirName
+        anotherPrefixWasFound = True
+        while anotherPrefixWasFound:
+
+            anotherPrefixWasFound = False
+            for prefix in knownPrefixes:
+
+                if dirNameTemp.startswith(prefix):
+                    self.prefixes.append(prefix)
+                    dirNameTemp = dirNameTemp[len(prefix):]
+
+                    anotherPrefixWasFound = True
+                    break
+
+    def parseSuffixes (self):
+        """Parsing an eventual Suffixes in this.dirName into this.suffixes."""
+
+        knownSuffixes = [
+            '.shared.for.saugstube.to.mpg',
+             '.seeded.by.www.p2p-crew.to', 'seeded by www.p2p-crew.to',
+        ]
+
+        self.suffixes = [] # HACK I don't know why, but this is necessary.
+
+        # Repeating until there is no further prefix to be found.
+        dirNameTemp = self.dirName
+        anotherSuffixWasFound = True
+        while anotherSuffixWasFound:
+
+            anotherSuffixWasFound = False
+            for suffix in knownSuffixes:
+
+                if dirNameTemp.endswith(suffix):
+                    self.suffixes.append(suffix)
+                    dirNameTemp = dirNameTemp[:len(suffix)]
+
+                    anotherSuffixWasFound = True
+                    break
+
+
 
     def parseYear (self):
         """Parsing the Year Eventually Contained in self.dirName"""
@@ -281,135 +264,108 @@ class Video:
 
             yearStartPos -= 1
             yearEndPos += 1
-        else:
-            opener = ''
-            closer = ''
 
-        #print 'Year found:', opener, year, closer, self.dirName[yearStartPos:yearEndPos], self.dirName
-
-        self.yearStartPos = yearStartPos
-        self.year = year
-        self.yearEndPos = yearEndPos
+        self.tags['year']['start'] = yearStartPos
+        self.tags['year']['value'] = year
+        self.tags['year']['end'] = yearEndPos
 
     def requestYear (self):
-        """Requesting self.year from IMDB API using ImdbApiClient"""
+        """Requesting self.tags['year'] from IMDB API using ImdbApiClient"""
 
         #print response['Title'] + ' (' + response['Year'] + ')'
         iac = ImdbApiClient()
         iac.lookup(None, self.title)
 
+        #self.tags['year']['value'] = resultYear
+
     def parseTags (self):
         """Parsing the Tags of self.dirName into self.tags"""
 
         for category in self.tags:
-            for synonyms in self.tags[category]:
+
+            # Do not map year to anything
+            if category == 'year': continue
+
+            for synonyms in self.vT.getSynonyms()[category]:
                 for synonym in synonyms:
-                    #print category, '-', synonyms, '-', synonym
 
                     self.parseTag(category, synonym)
 
     def parseTag (self, category, synonym):
+        """Parsing a single given synonym of a given category into self.tags"""
 
         # Checking That The Tag Is in self.dirName
         if synonym not in self.dirName: return
 
-        # Determining The Hash Tag
-        for synonyms in self.tags[category]:
+        # Determining the hashTag
+        hashTag = ''
+        for synonyms in self.vT.getSynonyms()[category]:
             if synonym in synonyms:
                 hashTag = synonyms[0]
 
         # Saving
-        if category == 'Audio Encoding': self.audioEncoding = hashTag
-        if category == 'Audio Language': self.audioLanguage = hashTag
-        if category == 'Audio Source': self.audioSource= hashTag
-        if category == 'Release Group': self.releaseGroup = hashTag
-        if category == 'Source Media': self.sourceMedia = hashTag
-        if category == 'Video Encoding': self.videoEncoding = hashTag
-        if category == 'Video Resolution': self.videoResolution = hashTag
-        if category == 'Video Source': self.videoSource = hashTag
-        if category == 'Video Version': self.videoVersion= hashTag
-
-    def parseSuffix (self):
-        """Parsing an Eventual Suffix in this.dirName into this.suffix"""
-
-        knownSuffixes = [
-            '.shared.for.saugstube.to.mpg'
-        ]
-
-        # Repeating until there is no further suffix to be found.
-        breakCondition = False
-        while breakContidition:
-
-            breakCondition = True
-            for suffix in knownSuffixes:
-
-                if self.dirName.endswith(suffix):
-                    self.suffixes += suffix
-                    breakCondition = False
-                    break
+        self.tags[category]['value'] = hashTag
 
     def parseTitle (self):
-        """Parsing the title contained in this.dirName into this.title using all other attributes."""
+        """Parsing the title from self.dirName into self.title, using self.*"""
 
-        # Overwriting all parsed attributes with whitespace
-        dirName = self.dirName
-        print dirName
+        # Loading the directory name as a starting point
+        self.title = self.dirName
 
-        if self.yearStartPos != 0 and self.yearEndPos != 0:
+        # Overwriting year with spaces
+        if self.tags['year']['start'] != 0 and self.tags['year']['end'] != 0:
 
-            # Adding an additional whitespace after the year tag position
+            # Adding a space after the year tag position, if something follows it
             extension = ' '
             try:
-                self.dirName[self.yearEndPos + 1]
+                self.title[self.tags['year']['end'] + 1]
             except IndexError:
                 extension = ''
 
-            # Adding 4 or 6 spaces as appropriate
-            if self.yearEndPos - self.yearStartPos == 4:
-                    dirName = dirName[:self.yearStartPos] + '    ' + extension + dirName[self.yearEndPos:]
+            # Adding 4 or 6 for the year and one for the extension, as appropriate
+            self.title = self.title[:self.tags['year']['start']] + \
+                         ''.rjust(self.tags['year']['end'] - self.tags['year']['start']) + \
+                         extension + \
+                         self.title[self.tags['year']['end']:]
 
-            if self.yearEndPos - self.yearStartPos == 6:
-                    dirName = dirName[:self.yearStartPos] + '      ' + extension + dirName[self.yearEndPos:]
+        # Stripping all prefixes and expanding by their length to conserve positions
+        for prefix in self. prefixes:
+            self.title = self.title[len(prefix):].ljust(len(prefix), ' ')
 
-        # Stripping of the superfluous whitespace
-        whitespacesInRow = 0
-        title = ''
-        for char in dirName:
+        # Stripping all suffixes and expanding by their length to conserve positions
+        for suffix in self. suffixes:
+            self.title = self.title[:-len(suffix)].rjust(len(suffix), ' ')
+
+        # Translating into spaces
+        videoTool = VideoTool.VideoTool()
+        self.title = videoTool.decodeSpaces(self.title, self.spaceCharacter)
+
+        # Stripping of double spaces
+        newTitle = ''
+
+        spacesInRow = 0
+        for char in self.title:
             if char == ' ':
-                whitespacesInRow += 1
+                spacesInRow += 1
             else:
-                whitespacesInRow = 0
+                spacesInRow = 0
 
-            if whitespacesInRow == 2:
-                title = title[:-1]
-                whitespacesInRow = 0
+            if spacesInRow == 2:
+                # Double space detected, removing it
+                newTitle = newTitle[:-1]
+                spacesInRow = 0
             else:
-                title += char
+                newTitle += char
 
-        # Stripping trailing whitespaces
-        title = ' '.join(title.split())
+        self.title = newTitle
 
-        print title
-
-
-    def parseTitle (self):
-
-        # Stripping the prefix
-        dirName = self.dirName[len(self.prefix):]
-
-        # Stripping eventual whitespaces
-        mt = VideoTool.VideoTool()
-        dirName = mt.stripWhitespaceCharacter(dirName, self.whitespaceCharacter)
-
-    def echo (self):
-        """Echoing this single video."""
-
-        self.printAttributes()
+        # Stripping trailing spaces
+        self.title = ' '.join(self.title.split())
 
     def printMethods(self):
         """Printing all methods of this object and their docstring."""
 
-        for name in dir(self):
+        for name in sorted(dir(self)):
             attr = getattr(self,name)
             if callable(attr):
                 print name,':',attr.__doc__
@@ -417,19 +373,22 @@ class Video:
     def printAttributes(self):
         """Print all the attributes of this object and their value."""
 
-        for name in dir(self):
-
-            # Skipping self.tags
-            if name == 'tags': continue
+        for name in sorted(dir(self)):
 
             attr = getattr(self,name)
             if not callable(attr):
-                print name,':',attr
+
+                if type(attr) is types.DictType:
+                    print name, ':'
+                    pprint.pprint(attr)
+                else:
+                    print name, ':', attr
+
 
     def printAll(self):
         """Calls all the methods of this object."""
 
-        for name in dir(self):
+        for name in sorted(dir(self)):
             attr = getattr(self,name)
             if callable(attr) and name != 'print_all' and name != '__init__':
                 attr() # calling the method

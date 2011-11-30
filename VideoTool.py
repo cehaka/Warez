@@ -19,12 +19,108 @@
 class VideoTool:
     """Static Methods used by Video"""
 
+    _synonyms = {
+
+        'audio channels':[\
+            ['#5.1', '5.1'],
+            ['#stereo', '2.0'],
+            ['#mono', '1.0'],
+        ],
+
+        'audio codec':[\
+            ['#mp3', 'mp3'],
+            ['#flac', 'flac'],
+            ['#aac', 'aac'],
+            ['#ogg', 'ogg'],
+        ],
+
+        'audio encoding':[\
+            ['#ac3', 'ac3', 'AC3', 'DTS']
+        ],
+
+        'audio language':[\
+            ['#a:de', 'German', 'german', 'Deutsch', 'deutsch'],
+            ['#a:en', 'English', 'english', 'Englisch', 'english']
+        ],
+
+        'audio source':[\
+            ['#md', 'MD', 'MicDub'],
+            ['#ld', 'LD', 'LineDub', 'Dubbed', 'dubbed', 'linedubbed', 'line dubbed']
+        ],
+
+        'container format':[\
+            ['#mkv', 'MKV', 'mkv'],
+            ['#avi', 'AVI', 'avi']
+        ],
+
+        'filmmaker':[\
+            ['#StanleyKubrick', 'Stanley Kubrick', 'stanley kubrick', \
+             'Kubrick', 'kubrick'],
+            ['#ld', 'LD', 'LineDub', 'Dubbed', 'dubbed', 'linedubbed', 'line dubbed']
+        ],
+
+        'release group':[\
+            ['#CRiTiCAL', '-CRiTiCAL', 'CRiTiCAL', '-critical'],
+            ['#CRUCiAL', '-CRUCiAL', 'CRUCiAL', '-crucial'],
+            ['#DiViDi', '-DiViDi', 'DiViDi', '-dividi'],
+            ['#iNTERNAL', '-iNTERNAL', 'iNTERNAL', '-internal'],
+            ['#PLEADERS', '-PL', '-PLEADERS', '-Pleaders', '-pleaders'],
+            ['#HDLiTE', '-HDLiTE', '-HDLite', 'HDLiTE', '-HDlite', '-hdlite'],
+            ['#HoRnEtS', '-HoRnEtS', '-Hornets', '-hornets'],
+            ['#NOTRADE', '-NOTRADE', '-NoTrade', '-noTrade', '-notrade'],
+            ['#XMF', '-XMF', '-Xmf', '-xmf'],
+            ['#KiNOWELT', '-KiNOWELT', '-kinowelt'],
+            ['#HQC', '-HQC', '-hqc'],
+            ['#BiG', '-BiG', '-big']
+        ],
+
+        'source media':[\
+            ['#BDrip', 'BDRip', 'BDrip', 'bdrip', 'BD',
+                'BlueRay', 'blueray', 'BlueRayRip', 'bluerayrip',
+                'BRRIP', 'BRRip', 'BRrip', 'brrip'],
+            ['#DVDrip', 'DVDRip', 'DVDrip', 'DVDRiP', 'DVD rip', 'dvd rip',
+                'dvdrip', 'DVD', 'DVDR'],
+            ['#HDTVrip', 'HDTVrip', 'hdtvRip', 'HDTVRIP', 'HDTVRip', 'HDTV', 'hdtv']
+        ],
+
+        'subtitle language':[\
+            ['#s:de', 'German Substitles', 'german subtitles', \
+             'Deutsche Untertitel', 'Deutsche untertitel', 'deutsche untertitel'],
+            ['#s:en', 'English Subtitles', 'english subtitles', \
+             'Englische Untertitel', 'englishe Untertitel', 'englische untertitel']
+        ],
+
+        'video codec':[\
+            ['#MVCD', 'MVCD', 'mvcd'],
+            ['#h264', 'H264', 'h264', 'x264', 'X264'],
+            ['#XViD', 'XVID', 'XViD', 'XviD', 'Xvid', 'xvid']
+        ],
+
+        'video resolution':[\
+            ['#NTSC', 'NTSC', 'ntsc'],
+            ['#PAL', 'PAL'],
+            ['#720p', '720p'],
+            ['#1080i', '1080i']
+        ],
+
+        'video source':[\
+            ['#SC', 'SC', 'Screener'],
+            ['#TS', 'TS', 'Telesync', 'TeleSync']
+        ],
+
+        'video version':[\
+            ['#uncut', 'UNCUT', 'uncut'],
+            ['#proper', 'PROPER', 'proper'],
+            ['#directorsCut', 'Directors Cut', 'Director\'s Cut']
+        ]
+    }
+
     def __init__ (self):
         """Empty Constructor"""
 
         pass
 
-    def stripWhitespaceCharacter (self, nameEncoded, whitespaceCharacter):
+    def decodeSpaces (self, nameEncoded, whitespaceCharacter):
         """
         Generating a name with reals spaces.
         Returns the nameEncoded with decoded spaces.
@@ -82,3 +178,9 @@ class VideoTool:
         if nameDecoded.startswith(' '): nameDecoded = nameDecoded[1:]
 
         return nameDecoded
+
+    def getSynonyms (self):
+
+        """Returns a dictionary containing aliases for each possible tag."""
+
+        return self._synonyms

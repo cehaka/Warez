@@ -64,7 +64,7 @@ class VideoNamer:
         try:
             self.videos = os.parseDirs(self.movies).sort()
         except:
-            with open("videolists/0.filmlist") as f:
+            with open("videolists/minimal.filmlist") as f:
                 self.videos = f.readlines()
 
     def makeVideos (self):
@@ -80,8 +80,7 @@ class VideoNamer:
         """Provoking Printing"""
 
         for video in self.videos:
-        #video = self.videos[0]
-            video.echo()
+            video.printAttributes()
 
 
 if __name__ == '__main__':
