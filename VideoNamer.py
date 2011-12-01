@@ -35,13 +35,9 @@ videos = ''
 class VideoNamer:
     """High Level Class"""
 
-    # Static Attribute
-
-    videos = ''
-
     # Central data structure
 
-    videos = []
+    videos = ''
 
     def __init__ (self, videos):
         """
@@ -52,9 +48,7 @@ class VideoNamer:
 
         self.videos = videos
 
-    def run (self):
-        """Parsing and Renaming if needed"""
-
+        # Initializing videos
         self.parseDirs()
         self.makeVideos()
 
@@ -64,8 +58,9 @@ class VideoNamer:
         try:
             self.videos = os.parseDirs(self.movies).sort()
         except:
-            with open("videolists/minimal.filmlist") as f:
-                self.videos = f.readlines()
+            #with open("videolists/2.filmlist") as f:
+             #   self.videos = f.readlines()
+            self.videos = os.listdir('/mnt/Media/Video/Filme/')
 
     def makeVideos (self):
         """Instantiating A Video Object for Each Title"""
@@ -76,14 +71,5 @@ class VideoNamer:
             videos.append(v)
         self.videos = videos
 
-    def echo (self):
-        """Provoking Printing"""
-
-        for video in self.videos:
-            video.printAttributes()
-
-
 if __name__ == '__main__':
     mn = VideoNamer(videos)
-    mn.run()
-    mn.echo()

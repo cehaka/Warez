@@ -67,6 +67,10 @@ class ImdbApiClient:
         While both i and t are optional at least one argument is required.
         """
 
+        if not i and not t:
+            print 'ImdbApiClient: Error: neither i nor t are set.'
+            return
+
         # Building the URL
         if i != None: url = imdbApiUrl + urllib.urlencode({'i': i})
         if t != None: url = imdbApiUrl + urllib.urlencode({'t': t})

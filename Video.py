@@ -16,8 +16,11 @@
 #       Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #       MA 02110-1301, USA.
 
+import ImdbApiClient
 import VideoTool
+import shutil
 import pprint
+import string
 import types
 
 class Video:
@@ -28,29 +31,53 @@ class Video:
     dirName = ''
 
     # Technical Things
-    spaceCharacter = ''
+    whitespace = ''
 
     # Things in self.dirName
     prefixes = []
     suffixes = []
 
-    tags = {
-        'year': {'value': '', 'end': 0, 'start': 0},
-        'audio channels': {'value': '', 'end': 0, 'start': 0},
-        'audio codec': {'value': '', 'end': 0, 'start': 0},
-        'audio language': {'value': '', 'end': 0, 'start': 0},
-        'audio source': {'value': '', 'end': 0, 'start': 0},
-        'container format': {'value': '', 'end': 0, 'start': 0},
-        'filmmaker': {'value': '', 'end': 0, 'start': 0},
-        'video codec': {'value': '', 'end': 0, 'start': 0},
-        'video source': {'value': '', 'end': 0, 'start': 0},
-        'release group': {'value': '', 'end': 0, 'start': 0},
-        'subtitle language': {'value': '', 'end': 0, 'start': 0}
-    }
+    tags = ''
+
+    def initPrefixes (self):
+        """Initializing self.prefixes to an empty list."""
+
+        self.prefixes = []
+
+    def initSuffixes (self):
+        """Initializing self.suffixes to an empty list."""
+
+        self.suffixes = []
+
+    def initTags (self):
+        """Initializes self.tags to zero values"""
+
+        self.tags = {
+            'audio channels':{'name':0, 'end':0, 'start':0},
+            'audio codec':{'name':0, 'end':0, 'start':0},
+            'audio language':{'name':0, 'end':0, 'start':0},
+            'audio source':{'name':0, 'end':0, 'start':0},
+            'container format':{'name':0, 'end':0, 'start':0},
+            'filmmaker':{'name':0, 'end':0, 'start':0},
+            'video codec':{'name':0, 'end':0, 'start':0},
+            'video resolution':{'name':0, 'end':0, 'start':0},
+            'video source':{'name':0, 'end':0, 'start':0},
+            'release group':{'name':0, 'end':0, 'start':0},
+            'source media':{'name':0, 'end':0, 'start':0},
+            'subtitle language':{'name':0, 'end':0, 'start':0},
+            'year':{'name':0, 'end':0, 'start':0}
+        }
 
     # Output
 
     title = []
+
+    def initAll (self):
+        # Initializing the tags
+        self.initTags()
+
+        # Getting a VideoTool instance
+        self.vT = VideoTool.VideoTool()
 
     def __init__ (self, dirName = ''):
         """
@@ -59,8 +86,8 @@ class Video:
         @param  dirName    Name of the directory represented by this video.
         """
 
-        # Getting a VideoTool instance
-        self.vT = VideoTool.VideoTool()
+        # Initializing all needed things
+        self.initAll()
 
         # Cleaning out eventual line-endings
         if dirName.endswith('\n'): dirName = dirName[:-1]
@@ -68,11 +95,17 @@ class Video:
         # Writing the initial attribute
         self.dirName = dirName
 
-        # Parsing the initial attribute into all
+        # Parsing initial attribute into self.tags
         self.parse()
 
-        # Writing back the Changes
-        #self.rename()
+        # Checking whether full coverage was archived
+        self.checkFullCoverage()
+
+        # Printing for debugging
+        if not self.fullCoverage: self.printAttributes()
+
+        # Renaming if appropriate
+        self.rename()
 
     def parse (self):
         """Parsing self.dirName into Attributes"""
@@ -80,20 +113,27 @@ class Video:
         self.parsePrefixes()
         self.parseSuffixes()
         self.parseEncoding()
-        self.parseYear()
+
         self.parseTags()
+        self.parseYear()
+
         self.parseTitle()
 
+        # Generating output information
+        self.requestYear()
+
+        self.generateTitle()
+
     def parseEncoding (self):
-        """Parsing White Space Encoding into self.spaceCharacter"""
+        """Parsing White Space Encoding into self.whitespace"""
 
         self.parseEncodingWhitespace()
 
-        if self.spaceCharacter != '': return
+        if self.whitespace != '': return
 
         self.parseEncodingCompound()
 
-        if self.spaceCharacter != '': return
+        if self.whitespace != '': return
 
         print 'Warning:' + \
               'Neither a space character nor caseEncoding was detected:' + \
@@ -122,25 +162,25 @@ class Video:
         dots >= hyphens and \
         dots >= underscores and \
         dots != 0:
-            self.spaceCharacter = '.'
+            self.whitespace = '.'
 
         if spaces >= dots and \
         spaces >= hyphens and \
         spaces >= underscores and \
         spaces != 0:
-            self.spaceCharacter = ' '
+            self.whitespace = ' '
 
         if underscores >= dots and \
         underscores >= hyphens  and \
         underscores >= spaces and \
         underscores != 0:
-            self.spaceCharacter = '_'
+            self.whitespace = '_'
 
         if hyphens >= dots and \
         hyphens >= underscores and \
         hyphens >= spaces and \
         hyphens != 0:
-            self.spaceCharacter = '-'
+            self.whitespace = '-'
 
     def parseEncodingCompound (self):
         """Detecting Whitespaces Encoded into CamelCase and mixedCase"""
@@ -155,22 +195,24 @@ class Video:
         if lowerLetters >= upperLetters and \
         upperLetters != 0 and \
         self.dirName[0].isupper:
-            self.spaceCharacter = 'CamelCase'
+            self.whitespace = 'CamelCase'
 
         if lowerLetters >= upperLetters and \
         upperLetters != 0 and \
         self.dirName[0].islower:
-            self.spaceCharacter = 'mixedCase'
+            self.whitespace = 'mixedCase'
 
     def parsePrefixes (self):
         """Parsing an Eventual Prefix into self.prefix"""
 
         knownPrefixes = [
             'www.torrent.to...',
+            '[www top-hitz com]...', '[www.top-hitz.com]...', \
+            'www.top-hitz.com...', 'www top-hitz com...', 'www.top-hitz.com...',
             'www.ubb.to'
         ]
 
-        self.prefixes = [] # HACK I don't know why, but this is necessary.
+        self.initPrefixes() # HACK I don't know why, but this is necessary.
 
         # Repeating until there is no further prefix to be found.
         dirNameTemp = self.dirName
@@ -195,7 +237,7 @@ class Video:
              '.seeded.by.www.p2p-crew.to', 'seeded by www.p2p-crew.to',
         ]
 
-        self.suffixes = [] # HACK I don't know why, but this is necessary.
+        self.initSuffixes() # HACK I don't know why, but this is necessary.
 
         # Repeating until there is no further prefix to be found.
         dirNameTemp = self.dirName
@@ -211,8 +253,6 @@ class Video:
 
                     anotherSuffixWasFound = True
                     break
-
-
 
     def parseYear (self):
         """Parsing the Year Eventually Contained in self.dirName"""
@@ -231,7 +271,7 @@ class Video:
             yearEndPos += 1
             yearStartPos = yearEndPos - 4
 
-            # Breaking on finding a year
+            # Breaking on finding a :
             if numberCount == 4:
                 year = self.dirName[yearStartPos:yearEndPos]
 
@@ -266,30 +306,35 @@ class Video:
             yearEndPos += 1
 
         self.tags['year']['start'] = yearStartPos
-        self.tags['year']['value'] = year
+        self.tags['year']['name'] = year
         self.tags['year']['end'] = yearEndPos
-
-    def requestYear (self):
-        """Requesting self.tags['year'] from IMDB API using ImdbApiClient"""
-
-        #print response['Title'] + ' (' + response['Year'] + ')'
-        iac = ImdbApiClient()
-        iac.lookup(None, self.title)
-
-        #self.tags['year']['value'] = resultYear
 
     def parseTags (self):
         """Parsing the Tags of self.dirName into self.tags"""
 
+        self.initTags()
+
         for category in self.tags:
 
-            # Do not map year to anything
+            # Do not map : to anything
             if category == 'year': continue
 
             for synonyms in self.vT.getSynonyms()[category]:
+
+                # Determine the longest variant of a synonym
+                maxLength = 0
+                longestSynonym = ''
+
                 for synonym in synonyms:
 
-                    self.parseTag(category, synonym)
+                    synonym = synonym.replace(' ', self.whitespace)
+
+                    # If synonym was not found, skip
+                    if synonym in self.dirName and len(synonym) >= maxLength:
+                        maxLength = len(synonym)
+                        longestSynonym = synonym
+
+                if longestSynonym != '': self.parseTag(category, longestSynonym)
 
     def parseTag (self, category, synonym):
         """Parsing a single given synonym of a given category into self.tags"""
@@ -297,14 +342,20 @@ class Video:
         # Checking That The Tag Is in self.dirName
         if synonym not in self.dirName: return
 
-        # Determining the hashTag
+        # Determining the position
+        start = self.dirName.index(synonym)
+        end = start + len(synonym)
+
+        # Determining the concurrent hashTag
         hashTag = ''
         for synonyms in self.vT.getSynonyms()[category]:
-            if synonym in synonyms:
+            if synonym.replace(self.whitespace, ' ') in synonyms:
                 hashTag = synonyms[0]
 
         # Saving
-        self.tags[category]['value'] = hashTag
+        self.tags[category]['end'] = end
+        self.tags[category]['start'] = start
+        self.tags[category]['name'] = hashTag
 
     def parseTitle (self):
         """Parsing the title from self.dirName into self.title, using self.*"""
@@ -312,21 +363,23 @@ class Video:
         # Loading the directory name as a starting point
         self.title = self.dirName
 
-        # Overwriting year with spaces
-        if self.tags['year']['start'] != 0 and self.tags['year']['end'] != 0:
+        # Overwriting each tag with spaces
+        for tag in self.tags:
 
-            # Adding a space after the year tag position, if something follows it
-            extension = ' '
-            try:
-                self.title[self.tags['year']['end'] + 1]
-            except IndexError:
-                extension = ''
+            # Skipping tags with empty values
+            if self.tags[tag]['start'] == 0 or \
+               self.tags[tag]['end'] == 0 or \
+               self.tags[tag]['name'] == 0:
 
-            # Adding 4 or 6 for the year and one for the extension, as appropriate
-            self.title = self.title[:self.tags['year']['start']] + \
-                         ''.rjust(self.tags['year']['end'] - self.tags['year']['start']) + \
-                         extension + \
-                         self.title[self.tags['year']['end']:]
+                continue
+
+            # Adding spaces for the tag, as appropriate
+            self.title = \
+                self.title[:self.tags[tag]['start']] + \
+                 ''.rjust(
+                    self.tags[tag]['end'] - self.tags[tag]['start']
+                 ) + \
+                 self.title[self.tags[tag]['end']:]
 
         # Stripping all prefixes and expanding by their length to conserve positions
         for prefix in self. prefixes:
@@ -338,7 +391,7 @@ class Video:
 
         # Translating into spaces
         videoTool = VideoTool.VideoTool()
-        self.title = videoTool.decodeSpaces(self.title, self.spaceCharacter)
+        self.title = videoTool.decodeSpaces(self.title, self.whitespace)
 
         # Stripping of double spaces
         newTitle = ''
@@ -362,6 +415,90 @@ class Video:
         # Stripping trailing spaces
         self.title = ' '.join(self.title.split())
 
+        # Cleaning up own artefacts
+        self.title = self.title.replace('(0)', '')
+
+    def requestYear (self):
+        """Requesting self.tags['year'] from IMDB API using ImdbApiClient, if necassary."""
+
+        return # disabled for now
+
+        # Requesting year, if it is unknown
+        if self.tags['year']['name'] != 0: return
+
+        if self.title == 0:
+            print 'Video.requestYear: Error: No title is set. Can\'t request.'
+
+        print self.title
+
+        #print response['Title'] + ' (' + response['Year'] + ')'
+        iac = ImdbApiClient.ImdbApiClient()
+        result = iac.lookup(None, self.title)
+
+        # Saving
+        self.tags['year']['name'] = result['Year']
+
+    def generateTitle (self):
+        """Generating the title according to a format representing all attributes."""
+
+        # Skipping empty years
+        if not self.tags['year']['name'] == 0:
+
+            self.title += ' ' + '(' + str(self.tags['year']['name']) + ')'
+
+        for tag in self.tags:
+
+            # Skipping empty tags
+            if self.tags[tag]['end'] == 0 or \
+               self.tags[tag]['name'] == 0 or \
+               self.tags[tag]['start'] == 0 :
+
+                continue
+
+            # Skipping year
+            if tag == 'year': continue
+
+            self.title += ' ' + self.tags[tag]['name']
+
+    def checkFullCoverage (self):
+        """Calculates the coverage of self.tags over self.dirName."""
+
+        # Overwriting all parsed tags with spaces
+        tempTitle = self.title
+
+        for tag in self.tags:
+
+            if self.tags[tag]['start'] >= self.tags['year']['end']:
+
+                tempTitle = tempTitle[:self.tags[tag]['start']] + \
+                            ''.rjust(len(str(self.tags[tag]['name']))) + \
+                            tempTitle[self.tags[tag]['end']:]
+
+        # Counting all remaining non-space characters behind the year
+        count = 0
+        for char in tempTitle[self.tags['year']['end'] + 1:]:
+            if char in string.whitespace or char == self.whitespace:
+                continue
+            count += 1
+
+        # Accepting, if there was nothing left over
+        if self.tags['year']['end'] != 0 and count == 0:
+            self.fullCoverage = True
+        else:
+            self.fullCoverage = False
+
+    def rename (self):
+        """Renaming all directories that have been losslessly parsed"""
+
+        if self.dirName == self.title: return
+
+        print 'source:', self.dirName
+        print 'target:', self.title
+        answer = raw_input("Rename source to target? [Y/n]: ")
+
+        if answer == 'y' or not answer:
+            shutil.move('/mnt/Media/Video/Filme/' + self.dirName, '/mnt/Media/Video/Filme/' + self.title)
+
     def printMethods(self):
         """Printing all methods of this object and their docstring."""
 
@@ -383,7 +520,6 @@ class Video:
                     pprint.pprint(attr)
                 else:
                     print name, ':', attr
-
 
     def printAll(self):
         """Calls all the methods of this object."""

@@ -40,38 +40,45 @@ class VideoTool:
 
         'audio language':[\
             ['#a:de', 'German', 'german', 'Deutsch', 'deutsch'],
-            ['#a:en', 'English', 'english', 'Englisch', 'english']
+            ['#a:en', 'English', 'english', 'Englisch', 'english', ' Eng '],
+            ['#a:rus', 'Russian', ' Rus ']
         ],
 
         'audio source':[\
-            ['#md', 'MD', 'MicDub'],
-            ['#ld', 'LD', 'LineDub', 'Dubbed', 'dubbed', 'linedubbed', 'line dubbed']
+            ['#MD', ' MD', 'MicDub', 'Mic Dubbed', 'mic dubbed', 'micdubbed'],
+            ['#LD', ' LD', 'LineDub', 'Line Dubbed', 'line dubbed', 'linedubbed']
         ],
 
         'container format':[\
-            ['#mkv', 'MKV', 'mkv'],
-            ['#avi', 'AVI', 'avi']
+            ['#mkv', ' MKV', ' mkv'],
+            ['#avi', ' AVI', ' avi']
         ],
 
         'filmmaker':[\
             ['#StanleyKubrick', 'Stanley Kubrick', 'stanley kubrick', \
-             'Kubrick', 'kubrick'],
-            ['#ld', 'LD', 'LineDub', 'Dubbed', 'dubbed', 'linedubbed', 'line dubbed']
+             'Kubrick', 'kubrick']
         ],
 
         'release group':[\
+            ['#AOE', '-AOE', 'AOE', '-aoe'],
+            ['#CiNEPLEXX', '-CiNEPLEXX', '-CinePlexx' '-cineplexx',\
+                           'CiNEPLEXX', 'CinePlexx', 'cineplexx'],
             ['#CRiTiCAL', '-CRiTiCAL', 'CRiTiCAL', '-critical'],
             ['#CRUCiAL', '-CRUCiAL', 'CRUCiAL', '-crucial'],
             ['#DiViDi', '-DiViDi', 'DiViDi', '-dividi'],
+            ['#EMPiRE', '-EMPIRE', 'EMPiRE'],
+            ['#EXQUiSiTE', '-EXQUiSiTE', 'EXQUiSiTE'],
             ['#iNTERNAL', '-iNTERNAL', 'iNTERNAL', '-internal'],
             ['#PLEADERS', '-PL', '-PLEADERS', '-Pleaders', '-pleaders'],
             ['#HDLiTE', '-HDLiTE', '-HDLite', 'HDLiTE', '-HDlite', '-hdlite'],
             ['#HoRnEtS', '-HoRnEtS', '-Hornets', '-hornets'],
+            ['#LCHD', '-LCHD-', '-LCHD', '-lchd'],
             ['#NOTRADE', '-NOTRADE', '-NoTrade', '-noTrade', '-notrade'],
             ['#XMF', '-XMF', '-Xmf', '-xmf'],
+            ['#XCOPY', '-XCOPY', '-XCoPY', '-Xcopy', '-xopy'],
             ['#KiNOWELT', '-KiNOWELT', '-kinowelt'],
             ['#HQC', '-HQC', '-hqc'],
-            ['#BiG', '-BiG', '-big']
+            ['#BiG', '-BiG', '-big'],
         ],
 
         'source media':[\
@@ -80,7 +87,8 @@ class VideoTool:
                 'BRRIP', 'BRRip', 'BRrip', 'brrip'],
             ['#DVDrip', 'DVDRip', 'DVDrip', 'DVDRiP', 'DVD rip', 'dvd rip',
                 'dvdrip', 'DVD', 'DVDR'],
-            ['#HDTVrip', 'HDTVrip', 'hdtvRip', 'HDTVRIP', 'HDTVRip', 'HDTV', 'hdtv']
+            ['#HDTVrip', 'HDTVrip', 'hdtvRip', 'HDTVRIP', 'HDTVRip', 'HDTV', 'hdtv'],
+            ['#Megavideo', '#MegaVideo', 'Mega Video', 'mega video', 'megavideo']
         ],
 
         'subtitle language':[\
@@ -91,6 +99,7 @@ class VideoTool:
         ],
 
         'video codec':[\
+            ['#SVCD', 'SVCD', 'svcd'],
             ['#MVCD', 'MVCD', 'mvcd'],
             ['#h264', 'H264', 'h264', 'x264', 'X264'],
             ['#XViD', 'XVID', 'XViD', 'XviD', 'Xvid', 'xvid']
@@ -99,8 +108,8 @@ class VideoTool:
         'video resolution':[\
             ['#NTSC', 'NTSC', 'ntsc'],
             ['#PAL', 'PAL'],
-            ['#720p', '720p'],
-            ['#1080i', '1080i']
+            ['#720p', '720i', '720p'],
+            ['#1080p', '1080i', '1080p']
         ],
 
         'video source':[\
