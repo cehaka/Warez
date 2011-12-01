@@ -53,10 +53,45 @@
 <dt id="Video.Video">
 <em class="property">class </em><tt class="descclassname">Video.</tt><tt class="descname">Video</tt><big>(</big><em>dirName=''</em><big>)</big><a class="headerlink" href="#Video.Video" title="Permalink to this definition">¶</a></dt>
 <dd><p>Self-aware Video Object</p>
+<dl class="method">
+<dt id="Video.Video.checkFullCoverage">
+<tt class="descname">checkFullCoverage</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.checkFullCoverage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the coverage of self.tags over self.dirName.</p>
+</dd></dl>
+
 <dl class="attribute">
 <dt id="Video.Video.dirName">
 <tt class="descname">dirName</tt><em class="property"> = ''</em><a class="headerlink" href="#Video.Video.dirName" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="method">
+<dt id="Video.Video.generateTitle">
+<tt class="descname">generateTitle</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.generateTitle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generating the title according to a format representing all attributes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Video.Video.initAll">
+<tt class="descname">initAll</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.initAll" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Video.Video.initPrefixes">
+<tt class="descname">initPrefixes</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.initPrefixes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializing self.prefixes to an empty list.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Video.Video.initSuffixes">
+<tt class="descname">initSuffixes</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.initSuffixes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializing self.suffixes to an empty list.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Video.Video.initTags">
+<tt class="descname">initTags</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.initTags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes self.tags to zero values</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="Video.Video.parse">
@@ -67,7 +102,7 @@
 <dl class="method">
 <dt id="Video.Video.parseEncoding">
 <tt class="descname">parseEncoding</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.parseEncoding" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parsing White Space Encoding into self.spaceCharacter</p>
+<dd><p>Parsing White Space Encoding into self.whitespace</p>
 </dd></dl>
 
 <dl class="method">
@@ -142,15 +177,16 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="Video.Video.requestYear">
-<tt class="descname">requestYear</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.requestYear" title="Permalink to this definition">¶</a></dt>
-<dd><p>Requesting self.tags[&#8216;year&#8217;] from IMDB API using ImdbApiClient</p>
+<dt id="Video.Video.rename">
+<tt class="descname">rename</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.rename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renaming all directories that have been losslessly parsed</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="Video.Video.spaceCharacter">
-<tt class="descname">spaceCharacter</tt><em class="property"> = ''</em><a class="headerlink" href="#Video.Video.spaceCharacter" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dl class="method">
+<dt id="Video.Video.requestYear">
+<tt class="descname">requestYear</tt><big>(</big><big>)</big><a class="headerlink" href="#Video.Video.requestYear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Requesting self.tags[&#8216;year&#8217;] from IMDB API using ImdbApiClient, if necassary.</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="Video.Video.suffixes">
@@ -159,12 +195,17 @@
 
 <dl class="attribute">
 <dt id="Video.Video.tags">
-<tt class="descname">tags</tt><em class="property"> = {'video source': {'start': 0, 'end': 0, 'value': ''}, 'subtitle language': {'start': 0, 'end': 0, 'value': ''}, 'audio channels': {'start': 0, 'end': 0, 'value': ''}, 'filmmaker': {'start': 0, 'end': 0, 'value': ''}, 'year': {'start': 0, 'end': 0, 'value': ''}, 'container format': {'start': 0, 'end': 0, 'value': ''}, 'audio language': {'start': 0, 'end': 0, 'value': ''}, 'audio source': {'start': 0, 'end': 0, 'value': ''}, 'release group': {'start': 0, 'end': 0, 'value': ''}, 'video codec': {'start': 0, 'end': 0, 'value': ''}, 'audio codec': {'start': 0, 'end': 0, 'value': ''}}</em><a class="headerlink" href="#Video.Video.tags" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">tags</tt><em class="property"> = ''</em><a class="headerlink" href="#Video.Video.tags" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="Video.Video.title">
 <tt class="descname">title</tt><em class="property"> = []</em><a class="headerlink" href="#Video.Video.title" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Video.Video.whitespace">
+<tt class="descname">whitespace</tt><em class="property"> = ''</em><a class="headerlink" href="#Video.Video.whitespace" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
