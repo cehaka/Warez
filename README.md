@@ -17,11 +17,11 @@ Performance
 -----------
 
 - Parses through 1000 videos in 500 ms
+- recognises 95 % of videolists/0.filmlist
 
 Features
 --------
 
-- recognises 95 % of videolists/0.filmlist
 - command line interface for interactive renaming
 
 To Do
