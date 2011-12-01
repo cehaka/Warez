@@ -235,6 +235,7 @@ class Video:
         knownSuffixes = [
             '.shared.for.saugstube.to.mpg',
              '.seeded.by.www.p2p-crew.to', 'seeded by www.p2p-crew.to',
+             'www mvgroup org'
         ]
 
         self.initSuffixes() # HACK I don't know why, but this is necessary.
@@ -417,6 +418,7 @@ class Video:
 
         # Cleaning up own artefacts
         self.title = self.title.replace('(0)', '')
+        self.title = self.title.replace(' # ', ' ')
 
     def requestYear (self):
         """Requesting self.tags['year'] from IMDB API using ImdbApiClient, if necassary."""

@@ -28,20 +28,18 @@ class VideoTool:
         ],
 
         'audio codec':[\
-            ['#mp3', 'mp3'],
-            ['#flac', 'flac'],
-            ['#aac', 'aac'],
-            ['#ogg', 'ogg'],
-        ],
-
-        'audio encoding':[\
-            ['#ac3', 'ac3', 'AC3', 'DTS']
+            ['#MP3', '#mp3', 'mp3'],
+            ['#FLAC', '#flac', 'flac'],
+            ['#AAC', '#aac', 'aac'],
+            ['#OGG', '#ogg', 'ogg'],
+            ['#AC3', '#ac3', 'ac3', 'AC3', 'DTS']
         ],
 
         'audio language':[\
-            ['#a:de', 'German', 'german', 'Deutsch', 'deutsch'],
-            ['#a:en', 'English', 'english', 'Englisch', 'english', ' Eng '],
-            ['#a:rus', 'Russian', ' Rus ']
+            ['#a:de', '#de', 'German', 'german', 'Deutsch', 'deutsch'],
+            ['#a:en', '#en', 'English', 'english', 'Englisch', 'english', '[Eng]', 'Eng '],
+            ['#a:rus', '#rus', 'Russian', ' Rus '],
+            ['#a:cn', '#cn', 'Chinese', '[Cn]']
         ],
 
         'audio source':[\
@@ -56,46 +54,70 @@ class VideoTool:
 
         'filmmaker':[\
             ['#StanleyKubrick', 'Stanley Kubrick', 'stanley kubrick', \
-             'Kubrick', 'kubrick']
+             'Kubrick', 'kubrick'],
+            ['#DC', 'DC Comics'],
+            ['#Doku', 'Dokumentation']
         ],
 
         'release group':[\
             ['#AOE', '-AOE', 'AOE', '-aoe'],
+            ['#aXXo', '-aXXo', '[aXXo]'],
+            ['#CENTi', '-CENTi', '-centi', 'CENTi', 'centi'],
+            ['#CHALLENGE', '-CHALLENGE', '-challenge', 'CHALLENGE'],
             ['#CiNEPLEXX', '-CiNEPLEXX', '-CinePlexx' '-cineplexx',\
                            'CiNEPLEXX', 'CinePlexx', 'cineplexx'],
+            ['#CIS', '-cis'],
             ['#CRiTiCAL', '-CRiTiCAL', 'CRiTiCAL', '-critical'],
             ['#CRUCiAL', '-CRUCiAL', 'CRUCiAL', '-crucial'],
+            ['#D0GG', '-DoGG', 'DOGG', 'DoGG'],
             ['#DiViDi', '-DiViDi', 'DiViDi', '-dividi'],
             ['#EMPiRE', '-EMPIRE', 'EMPiRE'],
             ['#EXQUiSiTE', '-EXQUiSiTE', 'EXQUiSiTE'],
-            ['#iNTERNAL', '-iNTERNAL', 'iNTERNAL', '-internal'],
+            ['#EXTREEM', '-EXTREEM', '-extreem', 'EXTREEM'],
+            ['#iNK', '-iNK', 'iNK'],
+            ['#iNTERNAL', '-iNTERNAL', 'iNTERNAL', '-internal', 'INTERNAL'],
             ['#PLEADERS', '-PL', '-PLEADERS', '-Pleaders', '-pleaders'],
             ['#HDLiTE', '-HDLiTE', '-HDLite', 'HDLiTE', '-HDlite', '-hdlite'],
+            ['#HD2', '-HD2', 'HD2'],
             ['#HoRnEtS', '-HoRnEtS', '-Hornets', '-hornets'],
             ['#LCHD', '-LCHD-', '-LCHD', '-lchd'],
+            ['#MrProper', '-MrProper', '-mrProper', 'mrproper', 'MrProper'],
+            ['#Ms89', '-Ms89', 'Ms89'],
             ['#NOTRADE', '-NOTRADE', '-NoTrade', '-noTrade', '-notrade'],
+            ['#0PTiMUS', '-0PTiMUS', '0PTiMUS', '-optimus'],
+            ['#QoM', '-QoM', 'QoM'],
+            ['#RoCK', '-ROCK', '-RoCK', 'ROCK', 'RoCK'],
+            ['#RSG', '#rsg', '-RSG', '-rsg'],
+            ['#StarWars ', '-StarWars', '-starwars '],
+            ['#TOXiC', '-T0XiC', 'TOXiC'],
+            ['#ViDEOWELT', '-ViDEOWELT', 'ViDEOWELT', 'VideoWelt', 'Videowelt', 'videowelt'],
+            ['#WAF', '-WAF'],
+            ['#WunSeeDee', '-WunSeeDee', 'WunSeeDee'],
             ['#XMF', '-XMF', '-Xmf', '-xmf'],
             ['#XCOPY', '-XCOPY', '-XCoPY', '-Xcopy', '-xopy'],
             ['#KiNOWELT', '-KiNOWELT', '-kinowelt'],
             ['#HQC', '-HQC', '-hqc'],
-            ['#BiG', '-BiG', '-big'],
+            ['#BiG', '-BiG', '-big']
         ],
 
         'source media':[\
-            ['#BDrip', 'BDRip', 'BDrip', 'bdrip', 'BD',
-                'BlueRay', 'blueray', 'BlueRayRip', 'bluerayrip',
-                'BRRIP', 'BRRip', 'BRrip', 'brrip'],
-            ['#DVDrip', 'DVDRip', 'DVDrip', 'DVDRiP', 'DVD rip', 'dvd rip',
-                'dvdrip', 'DVD', 'DVDR'],
-            ['#HDTVrip', 'HDTVrip', 'hdtvRip', 'HDTVRIP', 'HDTVRip', 'HDTV', 'hdtv'],
-            ['#Megavideo', '#MegaVideo', 'Mega Video', 'mega video', 'megavideo']
+            ['#BDrip', '#BluRay', 'BDRip', 'BDrip', 'bdrip', 'BD',
+                'Blue-Ray', 'Blue-ray', 'blue-ray', 'Blu-Ray', 'Blu-ray', 'blu-ray', 'BlueRay', 'blueray', \
+                'BlueRayRip', 'bluerayrip', 'BRRIP', 'BRRip', 'BRrip', 'brrip'],
+            ['#DVDrip', 'DVDRip', 'DVDrip', 'DvDrip', 'DVDRiP', 'DVD rip', 'dvd rip',
+                'Dvdrip', 'dvdrip', 'DVD', 'DVDR'],
+            ['#HDTVrip', '#HDRip', 'HDTVrip', 'hdtvRip', 'HDTVRIP', 'HDTVRip', 'HDTV', 'hdtv'],
+            ['#Megavideo', '#MegaVideo', 'Mega Video', 'mega video', 'megavideo'],
+            ['#R5', '#r5',  'R5']
         ],
 
         'subtitle language':[\
             ['#s:de', 'German Substitles', 'german subtitles', \
              'Deutsche Untertitel', 'Deutsche untertitel', 'deutsche untertitel'],
             ['#s:en', 'English Subtitles', 'english subtitles', \
-             'Englische Untertitel', 'englishe Untertitel', 'englische untertitel']
+             'Englische Untertitel', 'englishe Untertitel', 'englische untertitel', \
+             '[Eng Subs]', '[eng subs]', '[Eng Sub]', 'Eng Subs', 'eng subs', 'Eng Sub', 'eng sub'],
+             ['#s:cn']
         ],
 
         'video codec':[\
@@ -113,7 +135,7 @@ class VideoTool:
         ],
 
         'video source':[\
-            ['#SC', 'SC', 'Screener'],
+            ['#SC', '#src', 'SC', 'Screener'],
             ['#TS', 'TS', 'Telesync', 'TeleSync']
         ],
 
