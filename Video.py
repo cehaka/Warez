@@ -18,8 +18,10 @@
 
 import ImdbApiClient
 import VideoTool
-import shutil
+
+import os
 import pprint
+import shutil
 import string
 import types
 
@@ -29,6 +31,7 @@ class Video:
     # Input
 
     dirName = ''
+    videoDir = ''
 
     # Technical Things
     whitespace = ''
@@ -38,6 +41,10 @@ class Video:
     suffixes = []
 
     tags = ''
+
+    # Output
+
+    title = []
 
     def initPrefixes (self):
         """Initializing self.prefixes to an empty list."""
@@ -68,18 +75,16 @@ class Video:
             'year':{'name':0, 'end':0, 'start':0}
         }
 
-    # Output
-
-    title = []
-
     def initAll (self):
         # Initializing the tags
         self.initTags()
+        self.initPrefixes()
+        self.initSuffixes()
 
         # Getting a VideoTool instance
         self.vT = VideoTool.VideoTool()
 
-    def __init__ (self, dirName = ''):
+    def __init__ (self, videoDir='', dirName=''):
         """
         Attribute Writing Constructor
 
@@ -94,6 +99,13 @@ class Video:
 
         # Writing the initial attribute
         self.dirName = dirName
+        self.videoDir = videoDir
+
+        # Sanity Check
+        if self.dirName == '':
+            raise
+            print "Warning: Empty dirName. Skipping this Video."
+            return
 
         # Parsing initial attribute into self.tags
         self.parse()
@@ -206,9 +218,12 @@ class Video:
         """Parsing an Eventual Prefix into self.prefix"""
 
         knownPrefixes = [
+            'www.bitreactor.to...', 'www bitreactor to_', 'www.bitreactor.to_',
+            '[www.byte.to]', '[www byte to]', 'www byte to', 'www.byte.to',
             'www.torrent.to...',
-            '[www top-hitz com]...', '[www.top-hitz.com]...', \
+            '[www top-hitz com]', '[www top-hitz com]...', '[www.top-hitz.com]...',
             'www.top-hitz.com...', 'www top-hitz com...', 'www.top-hitz.com...',
+            'www top-hitz com',
             'www.ubb.to'
         ]
 
@@ -306,6 +321,30 @@ class Video:
             yearStartPos -= 1
             yearEndPos += 1
 
+        # Checking for year-title-movies
+
+        if year == 2001 and \
+           'Odyssee' in self.dirName and \
+            'im' in self.dirName and \
+            'Weltraum' in self.dirName:
+
+            yearStartPos = 0
+            year = 0
+            yearEndPos = 0
+
+        if year == 2010 and \
+           'Das' in self.dirName and \
+           'Jahr' in self.dirName and \
+           'in' in self.dirName and \
+           'dem' in self.dirName and \
+           'wir' in self.dirName and \
+           'Kontakt' in self.dirName and \
+           'aufnehmen' in self.dirName:
+
+            yearStartPos = 0
+            year = 0
+            yearEndPos = 0
+
         self.tags['year']['start'] = yearStartPos
         self.tags['year']['name'] = year
         self.tags['year']['end'] = yearEndPos
@@ -328,12 +367,17 @@ class Video:
 
                 for synonym in synonyms:
 
+                    # use whitespace of this video
                     synonym = synonym.replace(' ', self.whitespace)
 
                     # If synonym was not found, skip
-                    if synonym in self.dirName and len(synonym) >= maxLength:
-                        maxLength = len(synonym)
-                        longestSynonym = synonym
+                    if synonym not in self.dirName: continue
+
+                    # If synonym is too small, skip
+                    if len(synonym) <= maxLength: continue
+
+                    maxLength = len(synonym)
+                    longestSynonym = synonym
 
                 if longestSynonym != '': self.parseTag(category, longestSynonym)
 
@@ -364,12 +408,11 @@ class Video:
         # Loading the directory name as a starting point
         self.title = self.dirName
 
-        # Overwriting each tag with spaces
+        # Overwriting each tag with spaces as a placeholder
         for tag in self.tags:
 
             # Skipping tags with empty values
-            if self.tags[tag]['start'] == 0 or \
-               self.tags[tag]['end'] == 0 or \
+            if self.tags[tag]['end'] == 0 or \
                self.tags[tag]['name'] == 0:
 
                 continue
@@ -413,12 +456,27 @@ class Video:
 
         self.title = newTitle
 
-        # Stripping trailing spaces
-        self.title = ' '.join(self.title.split())
+        # Stripping facing and trailing nonsense
+        while not self.title[len(self.title) - 1] in string.letters and \
+              not self.title[len(self.title) - 1] in string.digits and \
+              not self.title[len(self.title) - 1] in ['(', ')', '[', ']', '{', '}', '<', '>'] and \
+              not self.title[len(self.title) - 1] in ['.', '!', '?']:
+
+            self.title = self.title[:-1]
+
+        while not self.title[0] in string.letters and \
+              not self.title[0] in string.digits and \
+              not self.title[0] in ['(', ')', '[', ']', '{', '}', '<', '>'] and \
+              not self.title[0] in ['.', '!', '?']:
+
+            self.title = self.title[1:]
 
         # Cleaning up own artefacts
-        self.title = self.title.replace('(0)', '')
+        self.title = self.title.replace('(0)', ' ')
         self.title = self.title.replace(' # ', ' ')
+
+        # Cleaning up unwanted tags
+        self.title = self.title.replace('READ NFO', ' ')
 
     def requestYear (self):
         """Requesting self.tags['year'] from IMDB API using ImdbApiClient, if necassary."""
@@ -452,8 +510,7 @@ class Video:
 
             # Skipping empty tags
             if self.tags[tag]['end'] == 0 or \
-               self.tags[tag]['name'] == 0 or \
-               self.tags[tag]['start'] == 0 :
+               self.tags[tag]['name'] == 0 :
 
                 continue
 
@@ -494,12 +551,18 @@ class Video:
 
         if self.dirName == self.title: return
 
-        print 'source:', self.dirName
-        print 'target:', self.title
+        source = self.dirName
+        target = self.title
+
+        print 'source:', self.videoDir + os.sep + source
+        print 'target:', self.videoDir + os.sep + target
+
         answer = raw_input("Rename source to target? [Y/n]: ")
 
-        if answer == 'y' or not answer:
-            shutil.move('/mnt/Media/Video/Filme/' + self.dirName, '/mnt/Media/Video/Filme/' + self.title)
+        if answer == 'y' or answer == 'Y' or not answer:
+            shutil.move(
+                self.videoDir + os.sep + source, self.videoDir + os.sep + target
+            )
 
     def printMethods(self):
         """Printing all methods of this object and their docstring."""

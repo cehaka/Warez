@@ -30,46 +30,58 @@ A tag-aware tool for renaming videos.
 #
 # Configuration
 #
-videos = ''
+videoPath = '/mnt/Media/Video/Filme'
 
 class VideoNamer:
     """High Level Class"""
 
     # Central data structure
+    videoDirs = []
+    videoFiles = []
 
-    videos = ''
-
-    def __init__ (self, videos):
-        """
-        Constructor
-
-        @param  videos  Either a folder containing videos or a list of videos.
-        """
-
-        self.videos = videos
+    def __init__ (self, videoPath):
+        """Constructor"""
 
         # Initializing videos
-        self.parseDirs()
-        self.makeVideos()
+        self.parseVideos(videoPath)
+        self.makeVideos(videoPath)
 
-    def parseDirs (self):
-        """Parsing the Video Directory into self.videos"""
+    def parseVideos (self, videoPath):
 
-        try:
-            self.videos = os.parseDirs(self.movies).sort()
-        except:
-            #with open("videolists/2.filmlist") as f:
-             #   self.videos = f.readlines()
-            self.videos = os.listdir('/mnt/Media/Video/Filme/')
+        if os.path.isdir(videoPath):
+            self.parseVideoDir(videoPath)
+        else:
+            self.parseVideoList(self)
 
-    def makeVideos (self):
+    def parseVideoDir (self, videoPath):
+        """
+        Parses the video directory into self.videos.
+
+        @param  videoPath   A path to a directory containing directories
+                            containing videos.
+        """
+
+        for root, dirs, files in os.walk(videoPath):
+            self.videoDirs = dirs
+            self.videos = files
+            break # We only care about the top level, for now.
+
+    def parseVideoList (self, listPath):
+        """
+        Parses a list of video directories into self.videos.
+
+        @param  listPath    Path to a list of directories containing directories
+                            containing videos, for testing purposes.
+        """
+
+        with open("videolists/2.filmlist") as f:
+            self.videos = f.readlines()
+
+    def makeVideos (self, videoPath):
         """Instantiating A Video Object for Each Title"""
 
-        videos = []
-        for titleString in self.videos:
-            v = Video.Video(titleString)
-            videos.append(v)
-        self.videos = videos
+        for titleString in self.videoDirs:
+            v = Video.Video(videoPath, titleString)
 
 if __name__ == '__main__':
-    mn = VideoNamer(videos)
+    vn = VideoNamer(videoPath)

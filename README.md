@@ -31,3 +31,4 @@ To Do
 - requesting year via ImdbApiClient
 - meta data parsing from actual video files
 - web interface with indexes for each tag
+- commang line options
