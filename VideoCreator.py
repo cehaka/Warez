@@ -15,6 +15,10 @@
 #       Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #       MA 02110-1301, USA.
 
+"""
+Creates a directory tree from the filmlists for testing purposes.
+"""
+
 import os
 
 class VideoCreator:
@@ -27,11 +31,11 @@ class VideoCreator:
         """Creates a directory for each video in each filmlist."""
 
         if not os.environ['HOME'].startswith('/home/'):
-            print "VideoCreator.run(): Your home path seems odd. Aborting."
+            print("VideoCreator.run(): Your home path seems odd. Aborting.")
             return
 
         # Gathering videoLists
-        videoLists = os.parseDirs('videoLists/')
+        videoLists = os.listdir('videoLists/')
 
         # Gathering videos
         videos = []
@@ -43,7 +47,7 @@ class VideoCreator:
         for videoList in videos:
             for video in videoList:
                 try:
-                    os.mkdir(os.environ['HOME']+ '/Videos/' + video[:-1])
+                    os.mkdir(os.environ['HOME'] + '/Videos/' + video[:-1])
 
                 # Ignoring if file already exists
                 except OSError:
