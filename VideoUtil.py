@@ -16,10 +16,12 @@
 #       Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #       MA 02110-1301, USA.
 
-class VideoTool:
+class VideoUtil:
     """Static Methods used by Video"""
 
+    _synonyms_sorted = None
     _synonyms = {
+        # TODO add synonym category 'genre', 'lead_role', 'site' (goldesel.to)
 
         'audio channels':[\
             ['#5.1', '5.1', '5.1 Channels', '5.1 channels', '5.1 Channel', '5.1 channel', '5 1 ch'],
@@ -32,13 +34,13 @@ class VideoTool:
             ['#FLAC', '#flac', 'flac'],
             ['#AAC', '#aac', 'AAC', 'aac'],
             ['#OGG', '#ogg', 'OGG ''ogg'],
-            ['#AC3', '#ac3', 'AC3', 'ac3'],
+            ['#AC3', 'AC3D', 'AC3', '#Ac3', 'aC3', 'ac3', '1 2 AC3'],
             ['#DTS', '#dts', 'DTS', 'dts'],
             ['#Dolby', 'D-ES', 'Dolby-ES', 'Dolby-EX', 'DolbyES', 'DolbyEX']
         ],
 
         'audio language':[\
-            ['#a:de', '#de', 'GERMAN', 'German', 'german', 'Deutsch', 'deutsch'],
+            ['#a:de', '#de', 'Deutsch / German', 'Deutsch, German', 'Deutsch German', 'GERMAN', 'german-deutsch', 'German', 'german', 'Deutsch', 'deutsch'],
             ['#a:en', '#en', 'English', 'english', 'Englisch', 'english', '[Eng]', 'Eng '],
             ['#a:rus', '#rus', 'Russian', ' Rus '],
             ['#a:cn', '#cn', 'Chinese', '[Cn]'],
@@ -60,127 +62,151 @@ class VideoTool:
         'filmmaker':[\
             ['#AndreiTarkovsky', '(Andrei Tarkovsky)', '(AndreiTarkovsky)', '(andreiTarkovsky)', '(andreitarkovsky)'\
             'Andrei Tarkovsky', 'andrei tarkovsky', 'AndreiTarkovsky', 'andreiTarkovsky', 'andreitarkovsky'],
-            ['#CoenBrothers', 'Coen Brothers', 'coen brothers', 'CoenBrothers', 'coenBrothers', 'coenbrothers', 'Coen', 'coen'],
+            ['#CoenBrothers', 'Joel Coen', 'Coen Brothers', 'coen brothers', 'CoenBrothers', 'coenBrothers', 'coenbrothers', 'Coen', 'coen'],
             ['#NicolasCage', 'Nicolas Cage', 'nicolas cage', 'NicolasCage', 'nicolasCage', 'nicolascage'],
             ['#PeterGreenaway', 'Peter Greenaway', 'peter greenaway'],
             ['#StanleyKubrick', 'Stanley Kubrick', 'stanley kubrick', \
              'Kubrick', 'kubrick'],
+            ['#RobertAltman', 'Robert Altman', 'robert altman', 'RobertAltman', 'robertaltman'],
+            ['#ErichVonStroheim', 'Erich von Stroheim'],
             ['#UweBoll', 'Uwe Boll', 'uwe boll', 'UweBoll' 'uweboll'],
-            ['#Doku', '#doku', 'DOKU', 'Dokumentation'], # for lack of a better category
-            ['#Adventure', '[Adventure]'], # for lack of a better category
-            ['#trash'], # for lack of a better category
+            ['#Doku', '#doku', 'DOKU', 'Dokumentation'],  # for lack of a better category
+            ['#Adventure', '[Adventure]'],  # for lack of a better category
+            ['#trash'],  # for lack of a better category
             ['#uncut', '#Uncut', '#UNCUT', 'UNCUT', 'uncut'],
             ['#Director\'sCut', 'Directors Cut', 'director\'s cut', 'directors cut', 'DirectorsCut', '#DC', 'DC'],
             ['#proper', 'PROPER', 'proper'],
             ['#repack', 'REPACK', 'RePack', 'rePack', 'Repack'],
             ['#DavidLynch', 'David Lynch', 'david lynch', 'DavidLynch', 'davidlynch', 'lynch'],
+            ['#EmirKusturica', 'Emir Kusturica', 'emir kusturica', 'EmirKusturica', 'emirkusturica', 'kusturica'],
+            ['#RussellCrowe', 'Russell Crowe', 'RussellCrowe', 'russellcrowe'],
+            ['#ClintEastwood', 'Clint Eastwood', 'clint eastwood'],
+            ['#WalterWippersberg', 'Walter Wippersberg', 'walter wippersberg', 'WalterWippersberg', 'walterwippersberg']
         ],
 
         'release group':[\
+            ['#0PTiMUS', '-0PTiMUS', '0PTiMUS', '-optimus'],
             ['#3Li', '-3Li', '3Li'],
             ['#4SM4', '4SM4', '4Sm4', '4sM4', '4sm4'],
             ['#4th', '-4TH', '-4th', '-4Th', '-4tH', '4TH'],
             ['#AN', '-AN', ' AN '],
-            ['#AOE', '-AOE', 'AOE', '-aoe'],
+            ['#AOE', '-AOE', 'AOE', '-aoe', 'aoe-'],
             ['#aXXo', '-aXXo', '[aXXo]'],
+            ['#BiG', '-BiG', '-big'],
             ['#CENTi', '-CENTi', '-centi', 'CENTi', 'centi'],
             ['#CHALLENGE', '-CHALLENGE', '-challenge', 'CHALLENGE'],
             ['#CHD', '-CHD', '-chd', '-ChD', '-CHd', '-cHD'],
-            ['#CiNEPLEXX', '-CiNEPLEXX', '-CinePlexx' '-cineplexx',\
-                           'CiNEPLEXX', 'CinePlexx', 'cineplexx'],
+            ['#CHD-D1', '-CHD.D1'],
             ['#CiA', '-CiA', '-cia'],
+            ['#CiNEPLEXX', '-CiNEPLEXX', '-CinePlexx' '-cineplexx', 'CiNEPLEXX', 'CinePlexx', 'cineplexx'],
             ['#CIS', '-cis'],
+            ['#CODY', '-CODY', 'CODY'],
             ['#CRiTiCAL', '-CRiTiCAL', 'CRiTiCAL', '-critical'],
             ['#CRoW', '-CRoW', '-crow', 'CRoW'],
             ['#CRUCiAL', '-CRUCiAL', 'CRUCiAL', '-crucial'],
-            ['#DEFUSED', '-DEFUSED', 'DEFUSED', '-defused'],
             ['#D0GG', '-DOGG', '-D0GG', '-DoGG', '-d0gg', 'D0GG', 'DOGG', 'DoGG'],
-            ['#DON', '-DON'],
+            ['#DEFUSED', '-DEFUSED', 'DEFUSED', '-defused'],
+            ['#DETAiLS', '-DETAiLS', 'DETAiLS'],
             ['#DiViDi', '-DiViDi', 'DiViDi', '-dividi'],
+            ['#DON', '-DON'],
             ['#DvF'],
+            ['#DVL', '-DVL', '-dvl', 'DVL', 'dvl'],
             ['#dwiki', 'D-WiKi', 'd-wiki', 'DWiKi', 'Dwiki', 'dwiki'],
             ['#EMPiRE', '-EMPIRE', '-EMPiRE', 'EMPiRE'],
             ['#EXQUiSiTE', '-EXQUiSiTE', 'EXQUiSiTE'],
             ['#EXTREEM', '-EXTREEM', '-extreem', 'EXTREEM'],
             ['#FTP-Team', '-FTP-Team', '-ftp-team', 'FTP-Team'],
-            ['#FxW', '-FxW', '-fxw', 'FxW'],
+            ['#forever', '-by forever', 'by forever'],
+            ['#FreibeuterDerMeere', 'by Freibeuter der Meere'],
             ['#FXG', '-FXG', '-fxg', 'FXG'],
+            ['#FxW', '-FxW', '-fxw', 'FxW'],
             ['#GOREHOUNDS', '-GOREHOUNDS', '-gorehounds', 'GOREHOUNDS'],
+            ['#GREENBUD', '#greenbud', 'GreenBud', 'greenBud'],
             ['#GVD', '-GVD', '-gvd'],
+            ['#HACO', '-HACO', '-haco', 'HACO'],
+            ['#HD2', '-HD2', 'HD2'],
+            ['#HDLiTE', '-HDLiTE', '-HDLite', 'HDLiTE', '-HDlite', '-hdlite'],
+            ['#HoRnEtS', '-HoRnEtS', '-Hornets', '-hornets'],
+            ['#HQC', '-HQC', '-hqc'],
             ['#hV', '-hV', ' hV '],
             ['#iMPERiUM', '-iMPERiUM', '-imperium', 'iMPERiUM'],
             ['#iNK', '-iNK', 'iNK'],
-            ['#iNT','-iNT', 'iNT'],
             ['#iNTERNAL', '-iNTERNAL', 'iNTERNAL', '-internal', 'INTERNAL', 'iNTERNA', 'iNTER'],
-            ['#JBW', '-JBW', '-jbw'],
-            ['#PLEADERS', '-PL', '-PLEADERS', '-Pleaders', '-pleaders'],
-            ['#GREENBUD', '#greenbud', 'GreenBud', 'greenBud'],
-            ['#HACO', '-HACO', '-haco', 'HACO'],
-            ['#HDLiTE', '-HDLiTE', '-HDLite', 'HDLiTE', '-HDlite', '-hdlite'],
-            ['#HD2', '-HD2', 'HD2'],
-            ['#HoRnEtS', '-HoRnEtS', '-Hornets', '-hornets'],
+            ['#iNT', '-iNT', 'iNT'],
+            ['#imbt', '-imbt', 'imbt'],
             ['#IPpinki', '-IPpinki', 'IPpinki', 'iPPiNKi', 'ippinki'],
+            ['#JBW', '-JBW', '-jbw'],
             ['#Kingdom', '-KingDom', '-Kingdom', '-kingdom', '(Kingdom-Release)'],
+            ['#KiNOWELT', '-KiNOWELT', '-Kinowelt', '-kinowelt'],
             ['#KLASSiGER', '-KLASSiGER', '-klassiger', 'KLASSiGER'],
-            ['#LOGiCAL', '-LOGiCAL', '-logical', 'logical'],
+            ['#KM', 'KM'],
             ['#LCHD', '-LCHD-', '-LCHD', '-lchd'],
+            ['#LOGiCAL', '-LOGiCAL', '-logical', 'logical'],
             ['#MH', '-MH', '-Mh', '-mH', 'MH'],
-            ['#MoviesByRizzo', 'moviesbyrizzo'],
+            ['#MiNe', 'MiNe'],
             ['#MOViEFRiEND', '-MOViEFRiEND', '-moviefriend', 'MOViEFRiEND'],
+            ['#MoviesByRizzo', 'moviesbyrizzo'],
             ['#MrProper', '-MrProper', '-mrProper', 'mrproper', 'MrProper', '#MrP', '-MrP', '-mrp', 'MrP'],
             ['#Ms89', '-Ms89', 'Ms89'],
             ['#NOTRADE', '-NOTRADE', '-NoTrade', '-noTrade', '-notrade'],
             ['#NTG', '-NTG', '-ntg', 'NTG'],
             ['#OGMx', '-OGMx', '-ogmx', 'ogmx'],
-            ['#0PTiMUS', '-0PTiMUS', '0PTiMUS', '-optimus'],
+            ['#PLEADERS', '-PL', '-PLEADERS', '-Pleaders', '-pleaders'],
             ['#POE', '-POE', '-poe'],
-            ['#PP-Elite', '-PP-Elite'],
+            ['#PP-Elite', '-PP-Elite', 'By Pp-Elite'],
             ['#PressTV', '-PressTV', '-pressTV', '-presstv', 'PressTV'],
+            ['#PRoDJi', '-PRoDJi', 'PRoDJi', '-prodji', 'ProdJi', 'Prodji'],
             ['#QoM', '-QoM', 'QoM'],
-            ['#RoCK', '-ROCK', '-RoCK', 'ROCK', 'RoCK'],
             ['#RCP', '-RCP', '-rcp', 'RCP'],
             ['#RiP', '-RiP'],
-            ['#rollON', '-ROLLON', '-ROLLon', '-RollON', '-rollon', \
-                        'ROLLON', 'ROLLon', 'RollON', 'rollon'],
+            ['#RoCK', '-ROCK', '-RoCK', 'ROCK', 'RoCK'],
+            ['#rollON', '-ROLLON', '-ROLLon', '-RollON', '-rollon', 'ROLLON', 'ROLLon', 'RollON', 'rollon'],
             ['#ROOR', '-ROOR', '-roor'],
             ['#RSG', '#rsg', '-RSG', '-rsg'],
+            ['#RyD3R', '-RyD3R', 'RyD3R'],
             ['#SAMFD', '-SAMFD', 'samfd'],
+            ['#SecretMyth', '-SecretMyth', '-secretMyth' '-Secretmyth', '-secretmyth', 'SecretMyth'],
+            ['#Sedition', 'by Sedition'],
+            ['#SFO', '-SFO'],
+            ['#SG', '-SG', '-sg'],
             ['#SkA', 'SKA', '-SKA', '-SkA', '-Ska', '-ska'],
             ['#StarWars ', '-StarWars', '-starwars '],
-            ['#SecretMyth', '-SecretMyth', '-secretMyth' '-Secretmyth', '-secretmyth', 'SecretMyth'],
-            ['#SG', '-SG', '-sg'],
             ['#SYH', '-SYH', '-syh', 'SYH'],
+            ['#T2RitSch', 'by T2RitSch'],
             ['#THORA', '-THORA', '-thora', 'THORA'],
             ['#TLF', '-TLF', '-tlf', 'TLF', 'tlf'],
+            ['#TMP', '-TMP'],
             ['#TOXiC', '-T0XiC', 'TOXiC'],
+            ['#Toxic3', '-Toxic3'],
             ['#TRANSFORMERS', '-TRANSFORMERS', 'TRANSFORMERS'],
-            ['#ULTiMATE', '#ULTiMATE', '-ULTiMATE' 'ULTiMATE'],
+            ['#ULTiMATE', '#ULTiMATE', '-ULTiMATE', 'ULTiMATE'],
+            ['#UNS', 'by UNS'],
+            ['#VCF', '-VCF', 'VCF'],
             ['#ViDEOWELT', '-ViDEOWELT', 'ViDEOWELT', 'VideoWelt', 'Videowelt', 'videowelt'],
-            ['VCF', '-VCF', 'VCF'],
+            ['#W2G', '-W2G'],
             ['#WAF', '-WAF'],
             ['#WATCHABLE', '-WATCHABLE', '-watchable'],
             ['#WunSeeDee', '-WunSeeDee', 'WunSeeDee'],
-            ['#WunSeeDee', '-WunSeeDee', 'WunSeeDee'],
-            ['#XMF', '-XMF', '-Xmf', '-xmf'],
             ['#XCOPY', '-XCOPY', '-XCoPY', '-Xcopy', '-xopy'],
-            ['#KiNOWELT', '-KiNOWELT', '-kinowelt'],
-            ['#HQC', '-HQC', '-hqc'],
-            ['#BiG', '-BiG', '-big'],
-            ['#ZEKTORM', '-ZEKTORM', 'ZEKTORM', 'zektorm', '-zektorm']
-        ],''
+            ['#XMF', '-XMF', '-Xmf', '-xmf'],
+            ['#ZEKTORM', '-ZEKTORM', 'ZEKTORM', 'zektorm', '-zektorm'],
+            ['#goldesel.to', 'for www.goldesel.to'],
+        ],
 
         'source media':[\
+            ['#HD2DVDrip', 'HD2DVDRiP'],
+            ['#DVDSCR', 'DVDSCR'],
             ['#BDrip', '#BluRay', 'BDRip', 'BDrip', 'bdrip', 'BD',
-                'Blue-Ray', 'Blue-ray', 'blue-ray', 'Blu-Ray', 'Blu-ray', 'blu-ray', 'BlueRay', 'blueray', \
-                'BLURAY', 'BluRay', 'Bluray' \
-                'BlueRayRip', 'bluerayrip', 'BRRIP', 'BRRiP', 'BRRip', 'BRrip', 'brrip'],
+                'BluRay-Rip', 'Blu-Ray', 'Blu-ray', 'blu-ray', 'BlueRay', 'blueray', 'BLURAY', 'BluRay', 'Bluray' \
+                'Blue-Ray', 'Blue-ray', 'blue-ray', 'BlueRay-Rip', 'BlueRay-RIP', 'BlueRay-rip', 'BlueRayRip', 'bluerayrip', \
+                'BRRIP', 'BRRiP', 'BRRip', 'BRrip', 'brrip'],
             ['#DVBrip', 'DVB-Rip', 'DVB-rip', 'dvb-rip', 'DVBRIP', 'DVBRiP', 'DVBrip', 'DvbRip', 'dvbRip', 'dvbrip'],
-            ['#DVDrip', 'DVDRip', 'DVDrip', 'DvDrip', 'DVDRiP', 'DVD rip', 'dvd rip',
+            ['#DVDrip', 'DVD-Rip', 'DVD-rip', 'DVD-RIP', 'DVDRip', 'DVDrip', 'DvDrip', 'DVDRiP', 'DVD rip', 'dvd rip',
                 'Dvdrip', 'dvdrip', 'DVD', 'DVDR'],
             ['#HDTVrip', '#HDRip', 'HDTVrip', 'hdtvRip', 'HDTVRIP', 'HDTVRip', \
                          'HDRIP', 'HDRiP', 'HDRip', 'HDrip', 'Hdrip', 'hdRip', 'hdrip', 'HDTV', 'hdtv', ' HD '],
             ['#Megavideo', '#MegaVideo', 'Mega Video', 'mega video', 'megavideo'],
-            ['#R5', '#r5',  'R5']
+            ['#R5', '#r5', 'R5']
         ],
 
         'subtitle language':[\
@@ -198,10 +224,10 @@ class VideoTool:
         ],
 
         'video codec':[\
-            ['#SVCD', 'SVCD', 'svcd'],
+            ['#SVCD', 'SVCD', 'svcd', 'RSVCD', 'Rsvcd'],
             ['#MVCD', 'MVCD', 'mvcd'],
             ['#h264', 'H264', 'h264', 'x264', 'X264'],
-            ['#XViD', 'XVID', 'XViD', 'XviD', 'Xvid', 'xvid',\
+            ['#XViD', 'XVID', 'XViD', 'XviD', 'Xvid', 'xvid', \
                       'DIVX', 'DiVX', 'DivX', 'Divx', 'divx',
                       'DivXHD'],
         ],
@@ -221,7 +247,7 @@ class VideoTool:
         'video version':[\
             ['#uncut', 'UNCUT', 'unCUT', 'UNcut', 'UnCut', 'Uncut', 'uncut'],
             ['#proper', 'PROPER', 'proper'],
-            ['#directorsCut', 'Directors Cut', "Director's Cut"],
+            ['#ExtendedCut', 'EXTENDED CUT']
         ]
     }
 
@@ -290,7 +316,14 @@ class VideoTool:
         return nameDecoded
 
     def getSynonyms (self):
-
         """Returns a dictionary containing aliases for each possible tag."""
 
-        return self._synonyms
+        if self._synonyms_sorted == None:
+            synonyms_sorted_dict = dict()
+            for category in self._synonyms:
+                synonyms_sorted_dict[category] = sorted(self._synonyms[category], key=len, reverse=False)
+            self._synonyms_sorted = synonyms_sorted_dict
+            return self._synonyms_sorted
+        else:
+            return self._synonyms_sorted
+
