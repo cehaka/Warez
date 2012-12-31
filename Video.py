@@ -17,13 +17,14 @@
 #       MA 02110-1301, USA.
 
 import ImdbApiClient
-import VideoTool
+import VideoUtil
 
 import os
 import pprint
 import shutil
 import string
 import types
+from datetime import datetime
 
 class Video:
     """Self-aware Video Object"""
@@ -81,8 +82,8 @@ class Video:
         self.initPrefixes()
         self.initSuffixes()
 
-        # Getting a VideoTool instance
-        self.vT = VideoTool.VideoTool()
+        # Getting a VideoUtil instance
+        self.vT = VideoUtil.VideoUtil()
 
     def __init__ (self, videoDir='', dirName=''):
         """
@@ -104,7 +105,7 @@ class Video:
         # Sanity Check
         if self.dirName == '':
             raise
-            print "Warning: Empty dirName. Skipping this Video."
+            print("Warning: Empty dirName. Skipping this Video.")
             return
 
         # Parsing initial attribute into self.tags
@@ -147,9 +148,9 @@ class Video:
 
         if self.whitespace != '': return
 
-        print 'Warning:' + \
+        print('Warning:' + \
               'Neither a space character nor caseEncoding was detected:' + \
-               self.dirName
+               self.dirName)
 
     def  parseEncodingWhitespace (self):
         """Detecting Replacement of Whitespace with other Characters"""
@@ -163,10 +164,14 @@ class Video:
         nonLetters = 0
 
         for char in self.dirName:
-            if char == '.': dots += 1
-            if char == '-': hyphens += 1
-            if char == ' ': spaces += 1
-            if char == '_': underscores += 1
+            if char == '.':
+                dots += 1
+            if char == '-':
+                hyphens += 1
+            if char == ' ':
+                spaces += 1
+            if char == '_':
+                underscores += 1
 
         # choosing the most-common non-letter character
 
@@ -227,7 +232,7 @@ class Video:
             'www.ubb.to'
         ]
 
-        self.initPrefixes() # HACK I don't know why, but this is necessary.
+        self.initPrefixes()  # HACK I don't know why, but this is necessary.
 
         # Repeating until there is no further prefix to be found.
         dirNameTemp = self.dirName
@@ -253,7 +258,7 @@ class Video:
              'www mvgroup org'
         ]
 
-        self.initSuffixes() # HACK I don't know why, but this is necessary.
+        self.initSuffixes()  # HACK I don't know why, but this is necessary.
 
         # Repeating until there is no further prefix to be found.
         dirNameTemp = self.dirName
@@ -276,6 +281,8 @@ class Video:
         # Finding the year
         year = 0
 
+        current_year = datetime.now().year()
+
         # Finding four consecutive numbers
         numberCount = 0
         yearEndPos = 0
@@ -292,7 +299,7 @@ class Video:
                 year = self.dirName[yearStartPos:yearEndPos]
 
                 # sanity check
-                if int(year) not in range(1860, 2020):
+                if int(year) not in range(1860, current_year + 2):
                     numberCount = 0
                     year = 0
                     continue
@@ -300,8 +307,10 @@ class Video:
                 break
 
         # Checking whether a year was found after all
-        if yearEndPos == len(self.dirName): return 0, 0, 0
-        if year == 0: return 0, 0, 0
+        if yearEndPos == len(self.dirName):
+            return 0, 0, 0
+        if year == 0:
+            return 0, 0, 0
 
         # Finding the whole tag
         try:
@@ -434,7 +443,7 @@ class Video:
             self.title = self.title[:-len(suffix)].rjust(len(suffix), ' ')
 
         # Translating into spaces
-        videoTool = VideoTool.VideoTool()
+        videoTool = VideoUtil.VideoUtil()
         self.title = videoTool.decodeSpaces(self.title, self.whitespace)
 
         # Stripping of double spaces
@@ -457,14 +466,14 @@ class Video:
         self.title = newTitle
 
         # Stripping facing and trailing nonsense
-        while not self.title[len(self.title) - 1] in string.letters and \
+        while not self.title[len(self.title) - 1] in string.ascii_letters and \
               not self.title[len(self.title) - 1] in string.digits and \
               not self.title[len(self.title) - 1] in ['(', ')', '[', ']', '{', '}', '<', '>'] and \
               not self.title[len(self.title) - 1] in ['.', '!', '?']:
 
             self.title = self.title[:-1]
 
-        while not self.title[0] in string.letters and \
+        while not self.title[0] in string.ascii_letters and \
               not self.title[0] in string.digits and \
               not self.title[0] in ['(', ')', '[', ']', '{', '}', '<', '>'] and \
               not self.title[0] in ['.', '!', '?']:
@@ -481,17 +490,17 @@ class Video:
     def requestYear (self):
         """Requesting self.tags['year'] from IMDB API using ImdbApiClient, if necassary."""
 
-        return # disabled for now
+        return  # disabled for now
 
         # Requesting year, if it is unknown
         if self.tags['year']['name'] != 0: return
 
         if self.title == 0:
-            print 'Video.requestYear: Error: No title is set. Can\'t request.'
+            print('Video.requestYear: Error: No title is set. Can\'t request.')
 
-        print self.title
+        print(self.title)
 
-        #print response['Title'] + ' (' + response['Year'] + ')'
+        # print response['Title'] + ' (' + response['Year'] + ')'
         iac = ImdbApiClient.ImdbApiClient()
         result = iac.lookup(None, self.title)
 
@@ -554,10 +563,13 @@ class Video:
         source = self.dirName
         target = self.title
 
-        print 'source:', self.videoDir + os.sep + source
-        print 'target:', self.videoDir + os.sep + target
+        source_path = self.videoDir + os.sep + source
+        target_path = self.videoDir + os.sep + target
+        prefix_length = len(os.path.commonprefix([source_path, target_path]))
+        print('source:', source_path[prefix_length:])
+        print('target:', target_path[prefix_length:])
 
-        answer = raw_input("Rename source to target? [Y/n]: ")
+        answer = input("Rename source to target? [Y/n]: ")
 
         if answer == 'y' or answer == 'Y' or not answer:
             shutil.move(
@@ -568,28 +580,28 @@ class Video:
         """Printing all methods of this object and their docstring."""
 
         for name in sorted(dir(self)):
-            attr = getattr(self,name)
+            attr = getattr(self, name)
             if callable(attr):
-                print name,':',attr.__doc__
+                print(name, ':', attr.__doc__)
 
     def printAttributes(self):
         """Print all the attributes of this object and their value."""
 
         for name in sorted(dir(self)):
 
-            attr = getattr(self,name)
+            attr = getattr(self, name)
             if not callable(attr):
 
-                if type(attr) is types.DictType:
-                    print name, ':'
+                if type(attr) is types.__dict__:
+                    print(name, ':')
                     pprint.pprint(attr)
                 else:
-                    print name, ':', attr
+                    print(name, ':', attr)
 
     def printAll(self):
         """Calls all the methods of this object."""
 
         for name in sorted(dir(self)):
-            attr = getattr(self,name)
+            attr = getattr(self, name)
             if callable(attr) and name != 'print_all' and name != '__init__':
-                attr() # calling the method
+                attr()  # calling the method
