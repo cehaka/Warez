@@ -11,7 +11,7 @@ Motivation
 Dependencies
 ------------
 
-- Python (tested with 2.7.2)
+- Python (tested with 3.2.3)
 
 Performance
 -----------
