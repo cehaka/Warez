@@ -30,7 +30,7 @@ A tag-aware tool for renaming videos.
 #
 # Configuration
 #
-videoPath = '/mnt/Media/Video/Filme'
+videoPath = '/media/realcrypt1/Media/Video/Filme/'
 
 class VideoNamer:
     """High Level Class"""
@@ -64,7 +64,7 @@ class VideoNamer:
         for root, dirs, files in os.walk(videoPath):
             self.videoDirs = dirs
             self.videos = files
-            break # We only care about the top level, for now.
+            break  # We only care about the top level, for now.
 
     def parseVideoList (self, listPath):
         """
